@@ -31,10 +31,10 @@ npm start
 
 ### Lab 5
 
-![](.\images\Demo-lab5-01.png)
+![](./images/Demo-lab5-01.png)
 
-![](.\images\Demo-lab5-02.png)
+![](./images/Demo-lab5-02.png)
 
-![](.\images\Demo-lab5-03.png)
+![](./images/Demo-lab5-03.png)
 
-![](.\images\Demo-lab5-04.png)
+![](./images/Demo-lab5-04.png)
