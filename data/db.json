@@ -1,0 +1,29 @@
+{
+    "onSaleItems":[
+        {
+            "id": 0,
+            "name": "Roller Skate",
+            "price": 399.95
+        },
+        {
+            "id": 1,
+            "name": "Helmet",
+            "price": 69.95
+        },
+        {
+            "id": 2,
+            "name": "Pads",
+            "price": 74.95
+        },
+        {
+            "id": 3,
+            "name": "Wheels",
+            "price": 32.00
+        },
+        {
+            "id": 4,
+            "name": "Hat",
+            "price": 20.00
+        }
+    ]
+}
