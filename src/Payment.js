@@ -1,25 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
+import axios from 'axios';
 
-const Payment = ({order, setOrder}) => {
-    const [creditCardNumber, setCreditCardNumber] = useState(order.paymentInfo.creditCardNumber);
-    const [expireDate, setExpireDate] = useState(order.paymentInfo.expireDate);
-    const [ccvCode, setCcvCode] = useState(order.paymentInfo.ccvCode);
-    const [cardHolderName, setCardHolderName] = useState(order.paymentInfo.cardHolderName);
+const Payment = () => {
+    const [creditCardNumber, setCreditCardNumber] = useState(null);
+    const [expireDate, setExpireDate] = useState(null);
+    const [ccvCode, setCcvCode] = useState(null);
+    const [cardHolderName, setCardHolderName] = useState(null);
     const history = useHistory()
 
+    const [total_num, setDst] = useState(null);
+    useEffect(()=>{
+        axios.get("http://localhost:7000/order_query").then((data)=>{
+            const data_ = JSON.parse(JSON.stringify(data.data));
+            var total_num = 0;
+            data_.forEach(order => {
+                total_num = total_num + order.quantity * order.Price
+            });
+
+            return setDst(total_num);
+        });
+    },[])
+
     const handleSubmit = (e) => {
-        order.paymentInfo.creditCardNumber = creditCardNumber;
-        order.paymentInfo.expireDate = expireDate;
-        order.paymentInfo.ccvCode = ccvCode;
-        order.paymentInfo.cardHolderName = cardHolderName;
-        setOrder({...order});
+        axios
+        .post("http://localhost:7000/depost_card", {
+            card_number: creditCardNumber,
+            expiration_date: expireDate,
+            cvvCode: ccvCode,
+            holder_name: cardHolderName,
+        })
+        .then((res) => {
+          alert("success");
+        //   props.history.push("/signin");
+        })
+        .catch((e) => {
+          console.log(e);
+          alert("failed", e);
+        });
+
         history.push('/shipping');
     }
 
+
     return (
         <div className="payment">
-            <h2>Your total Price: {order.totalPrice}</h2>
+            <h2>Your total Price: {total_num}</h2>
             <form onSubmit={handleSubmit}>
                 <label>Credit Card Number</label>
                 <input
