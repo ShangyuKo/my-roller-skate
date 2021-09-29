@@ -2,28 +2,33 @@
     "onSaleItems":[
         {
             "id": 0,
-            "name": "Roller Skate",
-            "price": 399.95
+            "name": "Roller Skates",
+            "price": 399.95,
+            "picLink": "https://media.dollskill.com/media/1qVrP7p2r7z7HDduWyE9QzFM179S12Lk-34.jpg"
         },
         {
             "id": 1,
             "name": "Helmet",
-            "price": 69.95
+            "price": 69.95,
+            "picLink": "https://cdn.shopify.com/s/files/1/0836/6919/products/green_bike_helmet_001_600x.jpg?v=1611711971"
         },
         {
             "id": 2,
             "name": "Pads",
-            "price": 74.95
+            "price": 74.95,
+            "picLink": "https://www.rei.com/media/8be42fa2-c3a3-4517-85c1-e13dea1213f5?size=784x588"
         },
         {
             "id": 3,
             "name": "Wheels",
-            "price": 32.00
+            "price": 32.00,
+            "picLink": "https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Impala-58mm-82a-Pastel-Lilac-Roller-Skate-Wheels-_341741-front-US.jpg"
         },
         {
             "id": 4,
-            "name": "Hat",
-            "price": 20.00
+            "name": "Inline Skates",
+            "price": 20.00,
+            "picLink": "https://cdn.shopify.com/s/files/1/0066/8945/6243/products/Impala_skate_inline_skates_blades_rollerblades_blue_180x.jpg?v=1584306107"
         }
     ]
 }

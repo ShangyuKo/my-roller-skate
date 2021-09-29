@@ -96,3 +96,7 @@ button {
   border-radius: 8px;
   cursor: pointer;
 }
+.item_picture{
+  height: 15%;
+  width: 20%;
+}

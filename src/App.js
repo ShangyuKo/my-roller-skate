@@ -33,7 +33,10 @@ function App(){
   return(
     <Router>
       <div className="App">
-        <NavBar />
+        <Router>
+          <NavBar />
+        </Router>
+        
         <div className="content">
           <Switch>
             <Route exact path="/">
