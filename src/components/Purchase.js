@@ -1,6 +1,7 @@
 // import React, {useState} from "react";
-import useFetch from "./components/useFetch";
-import ItemList from "./components/ItemList";
+import useFetch from "./useFetch";
+import ItemList from "./ItemList";
+import './Purchase.css'
 import { useHistory } from "react-router";
 
 const Purchase = ({order, setOrder}) => {

@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Purchase from "./Purchase";
-import Payment from "./Payment";
-import Shipping from "./Shipping";
-import Confirm from "./Confirm";
-import NavBar from "./NavBar";
+import Purchase from "./components/Purchase";
+import Payment from "./components/Payment";
+import Shipping from "./components/Shipping";
+import Confirm from "./components/Confirm";
+import NavBar from "./components/NavBar";
 // npx json-server --watch data/db.json --port 8000
 function App(){
   const [order, setOrder] = useState({

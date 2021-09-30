@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
+import './Payment.css'
 
 const Payment = ({order, setOrder}) => {
     const [creditCardNumber, setCreditCardNumber] = useState(order.paymentInfo.creditCardNumber);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import useFetch from "./components/useFetch";
+import useFetch from "./useFetch";
 
 const Confirm = ({order, setOrder}) => {
     const {data:onSaleItems, error, isPending} = useFetch("http://localhost:8000/onSaleItems");

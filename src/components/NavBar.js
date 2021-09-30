@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
-import {Button} from './button';
+import {Button} from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import Dropdown from './Dropdown';
 
 function  NavBar(){
-  const {click, setClick} = useState(false);
-  // handleClick reports error here
+  const [click, setClick] = useState(false);
+  const [dropdown,setDropDown] = useState(false);
   const handleClick = () => setClick(!click);
-
+  const closeMobileMenu = () => setClick(false);
+ 
   return (
     <>
       <nav className='navbar'>
@@ -20,32 +21,33 @@ function  NavBar(){
         </div>
         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='nav-item'>
-            <Link to='/' className='nav-links'>
+            <Link to='/' className='nav-links' onClick={closeMobileMenu}>
               Home
             </Link>
           </li>
           <li className='nav-item'>
             {/* don not have the page for services yet */}
-            <Link to='/servicecs' className='nav-links'>
-              Servives <i className='fas fa-caret-down'></i>
+            <Link to='/servicecs' className='nav-links' onClick={closeMobileMenu}>
+              Servives <i className='fas fa-caret-down'/>
             </Link>
           </li>
           <li className='nav-item'>
             {/* don not have the page for products yet */}
-            <Link to='/servicecs' className='nav-links'>
-              Products <i className='fas fa-caret-down'></i>
+            <Link to='/product' className='nav-links' onClick={closeMobileMenu}>
+              Products <i className='fas fa-caret-down'/>
             </Link>
           </li>
           <li className='nav-item'>
             {/* don not have the page for contact yet */}
-            <Link to='/servicecs' className='nav-links'>
-              Contact <i className='fas fa-caret-down'></i>
+            <Link to='/contact' className='nav-links' onClick={closeMobileMenu}>
+              Contact <i className='fas fa-caret-down'/>
             </Link>
           </li>
+          {dropdown && <Dropdown/>}
           <li className='nav-item'>
             {/* don not have the page for signup yet */}
-            <Link to='/servicecs' className='nav-links'>
-              Sign-Up 
+            <Link to='/sign-up' className='nav-links'>
+              <Button/>
             </Link>
           </li>
         </ul>
