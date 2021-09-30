@@ -1,27 +1,79 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import useFetch from "./useFetch";
+import axios from 'axios';
+import useFetch from "./components/useFetch";
 
-const Confirm = ({order, setOrder}) => {
-    const {data:onSaleItems, error, isPending} = useFetch("http://localhost:8000/onSaleItems");
+const Confirm = () => {
     const history = useHistory();
-    // const [isLoading, setIsLoading] = useState(true);
     const [productsIdx, setProductsIdx] = useState([0,1,2,3,4])
-    
-    // useEffect(() => {
-    //     if(!isPending){
-    //         for (var i = 0; i < 5; i++) {
-    //             console.log(i, order.buyQuantity[i], onSaleItems[i].name);
-    //             if(order.buyQuantity[i] > 0){
-    //                 console.log(i);
-    //                 setProductsIdx(productsIdx => [...productsIdx, i])
-    //                 console.log(productsIdx);
-    //             }
-    //         } 
-    //         console.log(productsIdx);
-    //         setIsLoading(false);
-    //     }
-    // }, [isPending])
+
+    const [order, setOrder] = useState({
+        item_name: {},
+        item_price: [0,0,0,0,0,0],
+        buyQuantity: [0,0,0,0,0,0],
+        totalPrice: 0,
+        paymentInfo: {
+          creditCardNumber: '',
+          expireDate: '',
+          ccvCode: '',
+          cardHolderName: ''
+        },
+        shippingInfo: {
+          name: '',
+          addressLine1: '',
+          addressLine2: '',
+          city: '',
+          state: '',
+          zip: ''
+        }
+      });
+
+      const [total_num, setDst] = useState(null);
+      useEffect(()=>{
+          axios.get("http://localhost:7000/order_query").then((data)=>{
+              const data_ = JSON.parse(JSON.stringify(data.data));
+              var total_num = 0;
+              data_.forEach(order_ => {
+                order.item_name[order_.Id-1] = order_.Item
+                order.buyQuantity[order_.Id-1] = order_.quantity
+                order.item_price[order_.Id-1] = order_.Price
+                total_num = total_num + order_.quantity * order_.Price
+              });
+              order.totalPrice = total_num
+  
+              setOrder({...order});
+          });
+      },[])
+
+
+    useEffect(()=>{
+        axios.get("http://localhost:7000/card_query").then((data)=>{
+            const data_ = JSON.parse(JSON.stringify(data.data));
+
+            console.log(data_);
+            order.paymentInfo.creditCardNumber = data_[0].card_number;
+            order.paymentInfo.expireDate = data_[0].expiration_date;
+            order.paymentInfo.ccvCode = data_[0].cvvCode;
+            order.paymentInfo.cardHolderName = data_[0].holder_name;
+            setOrder({...order});
+        });
+    },[])
+
+
+    useEffect(()=>{
+        axios.get("http://localhost:7000/address_query").then((data)=>{
+            const data_ = JSON.parse(JSON.stringify(data.data));
+            order.shippingInfo.name = data_[0].name
+            order.shippingInfo.addressLine1 = data_[0].addressLine1
+            order.shippingInfo.addressLine2 = data_[0].addressLine2
+            order.shippingInfo.city = data_[0].city
+            order.shippingInfo.zip = data_[0].zip
+            setOrder({...order});
+        });
+    },[])
+
+
+
 
     return (
         <div>
@@ -29,19 +81,16 @@ const Confirm = ({order, setOrder}) => {
             <br/>
             <br/>
             <h2>Your Products</h2>
-            {!isPending && (
+            { (
                     productsIdx.map(productIdx => (
                         <h3>
                             <div style={{textAlign:'left'}}>
-                                {onSaleItems[productIdx].name}: {order.buyQuantity[productIdx]}
+                                {order.item_name[productIdx]}: {order.buyQuantity[productIdx]}
                             </div>
                             <div style={{textAlign:'right'}}>
-                                {(onSaleItems[productIdx].price*order.buyQuantity[productIdx]).toFixed(2)}
+                                {(order.item_price[productIdx]*order.buyQuantity[productIdx]).toFixed(2)}
                             </div>
                         </h3>
-                        // <h3>{onSaleItems[productIdx].name}: {order.buyQuantity[productIdx]}</h3>
-                        // <h3 style="float:right;">test</h3>
-                        // <h3>{order.buyQuantity[productIdx]}</h3>
                     ))
                 )
             }

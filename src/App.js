@@ -7,24 +7,6 @@ import Confirm from "./components/Confirm";
 import NavBar from "./components/NavBar";
 // npx json-server --watch data/db.json --port 8000
 function App(){
-  const [order, setOrder] = useState({
-    buyQuantity: [0,0,0,0,0],
-    totalPrice: 0,
-    paymentInfo: {
-      creditCardNumber: '',
-      expireDate: '',
-      ccvCode: '',
-      cardHolderName: ''
-    },
-    shippingInfo: {
-      name: '',
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      state: '',
-      zip: ''
-    }
-  });
 
   useEffect(() => {
     document.title = "MyRollerSkate"
@@ -40,16 +22,16 @@ function App(){
         <div className="content">
           <Switch>
             <Route exact path="/">
-              <Purchase order={order} setOrder={setOrder}/>
+              <Purchase order/>
             </Route>
             <Route path="/payment">
-              <Payment order={order} setOrder={setOrder}/>
+              <Payment/>
             </Route>
             <Route path="/shipping">
-              <Shipping order={order} setOrder={setOrder}/>
+              <Shipping/>
             </Route>
             <Route path="/confirm">
-              <Confirm order={order} setOrder={setOrder}/>
+              <Confirm />
             </Route>
           </Switch>
         </div>

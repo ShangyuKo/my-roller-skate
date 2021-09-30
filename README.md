@@ -12,29 +12,22 @@ CSE 5234 Distributed Enterprise Computing project
 
 ## Run
 
-- Install Node.js from [official Node.js website](https://nodejs.org/en/).
-- Use the first command line and run:
+- https://www.namepluto.com/react-express-mysql-%E5%AF%A6%E4%BD%9C%E7%B0%A1%E6%98%93%E7%99%BB%E5%85%A5%E5%8F%8A%E8%A8%BB%E5%86%8A%E7%B3%BB%E7%B5%B1/
+- install XAMPP https://www.apachefriends.org/index.html
 
 ```bash
-npx json-server --watch data/db.json --port 8000
+npm install mysql --save
+npm install express --save
+npm install axios
+npm install cors
 ```
 
-- Use the second command line and run:
-
+- step
 ```bash
+XAMPP 啟用 MySQL 及 Apache 服務，接著打開 phpMyAdmin
+cd sever 
+node app.js
+cd ..
+cd src
 npm start
 ```
-
-- Open the browser and go to http://localhost:3000/
-
-## Demo
-
-### Lab 5
-
-![](./images/Demo-lab5-01.png)
-
-![](./images/Demo-lab5-02.png)
-
-![](./images/Demo-lab5-03.png)
-
-![](./images/Demo-lab5-04.png)

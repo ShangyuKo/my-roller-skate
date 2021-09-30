@@ -1,29 +1,55 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
+import axios from 'axios';
 
-const Shipping = ({order, setOrder}) => {
-    const [name, setName] = useState(order.shippingInfo.name);
-    const [addressLine1, setAddressLine1] = useState(order.shippingInfo.addressLine1);
-    const [addressLine2, setAddressLine2] = useState(order.shippingInfo.addressLine2);
-    const [city, setCity] = useState(order.shippingInfo.city);
-    const [state, setState] = useState(order.shippingInfo.state);
-    const [zip, setZip] = useState(order.shippingInfo.zip);
+const Shipping = () => {
+    const [name, setName] = useState(null);
+    const [addressLine1, setAddressLine1] = useState(null);
+    const [addressLine2, setAddressLine2] = useState(null);
+    const [city, setCity] = useState(null);
+    const [state, setState] = useState(null);
+    const [zip, setZip] = useState(null);
     const history = useHistory()
 
+
+    const [total_num, setDst] = useState(null);
+    useEffect(()=>{
+        axios.get("http://localhost:7000/order_query").then((data)=>{
+            const data_ = JSON.parse(JSON.stringify(data.data));
+            var total_num = 0;
+            data_.forEach(order => {
+                total_num = total_num + order.quantity * order.Price
+            });
+
+            return setDst(total_num);
+        });
+    },[])
+
     const handleSubmit = (e) => {
-        order.shippingInfo.name = name;
-        order.shippingInfo.addressLine1 = addressLine1;
-        order.shippingInfo.addressLine2 = addressLine2;
-        order.shippingInfo.city = city;
-        order.shippingInfo.state = state;
-        order.shippingInfo.zip = zip;
-        setOrder({...order});
+        axios
+        .post("http://localhost:7000/depost_address", {
+            name: name,
+            address_1: addressLine1,
+            address_2: addressLine2,
+            city: city,
+            state: state,
+            zip: zip,
+        })
+        .then((res) => {
+          alert("success");
+        //   props.history.push("/signin");
+        })
+        .catch((e) => {
+          console.log(e);
+          alert("failed", e);
+        });
+
         history.push('/confirm');
     }
 
     return (
         <div className="payment">
-            <h2>Your total Price: {order.totalPrice}</h2>
+            <h2>Your total Price: {total_num}</h2>
             <form onSubmit={handleSubmit}>
                 <label>Name</label>
                 <input
