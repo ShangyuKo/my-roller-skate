@@ -40,9 +40,6 @@ const Purchase = () => {
                 name: element,
                 quantity: order.buyQuantity[element-1]
             })
-            .then((res) => {
-                alert("success");
-            })
             .catch((e) => {
                 console.log(e);
                 alert("failed", e);
