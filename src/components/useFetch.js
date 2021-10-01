@@ -8,14 +8,11 @@ const useFetch = (url) => {
 
     useEffect(()=>{
         axios.get("http://localhost:7000/item_query").then((data)=>{
-            // // console.log(data.data)
-            // console.log(JSON.stringify(data.data))
-            // console.log(JSON.parse(JSON.stringify(data.data)))
+            // console.log('data: ', data);
             const data_ = JSON.stringify(data.data);
             setData(data_);
             setError(null);
             setIsPending(false);
-            // return data_
         });
     },[])
 
