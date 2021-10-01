@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
   
 const qrop_item = "DROP TABLE Item";
-const creat_item = "CREATE TABLE Item ( Id int NOT NULL AUTO_INCREMENT, Item varchar(255), Price DOUBLE, quantity int, PRIMARY KEY (Id) );";
+const creat_item = "CREATE TABLE Item ( Id int NOT NULL AUTO_INCREMENT, Item varchar(255), Price DOUBLE, quantity int, PicLink varchar(255), PRIMARY KEY (Id) );";
 const qrop_order = "DROP TABLE Item_order";
 const creat_order = "CREATE TABLE Item_order ( Id int NOT NULL AUTO_INCREMENT, \
          Item varchar(255), Price DOUBLE, quantity int, PRIMARY KEY (Id)  )";
@@ -51,11 +51,11 @@ set_up.forEach(element =>
 // const creat_item = "CREATE TABLE Item ( Id int NOT NULL AUTO_INCREMENT, Item varchar(255), Price int, quantity int, PRIMARY KEY (Id) );";
 
 
-const item_add1 = "INSERT INTO Item (Item, Price, quantity) VALUES ('Roller Skate', 399.95, 0)"
-const item_add2 = "INSERT INTO Item (Item, Price, quantity) VALUES ('Helmet', 69.95, 0)"
-const item_add3 = "INSERT INTO Item (Item, Price, quantity) VALUES ('Pads', 74.95, 0)"
-const item_add4 = "INSERT INTO Item (Item, Price, quantity) VALUES ('Wheels', 32.00, 0)"
-const item_add5 = "INSERT INTO Item (Item, Price, quantity) VALUES ('Hat', 20.00, 0)"
+const item_add1 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Roller Skate', 399.95, 0, 'https://media.dollskill.com/media/1qVrP7p2r7z7HDduWyE9QzFM179S12Lk-34.jpg')"
+const item_add2 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Helmet', 69.95, 0, 'https://cdn.shopify.com/s/files/1/0836/6919/products/green_bike_helmet_001_600x.jpg?v=1611711971')"
+const item_add3 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Pads', 74.95, 0, 'https://www.rei.com/media/8be42fa2-c3a3-4517-85c1-e13dea1213f5?size=784x588')"
+const item_add4 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Wheels', 32.00, 0, 'https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Impala-58mm-82a-Pastel-Lilac-Roller-Skate-Wheels-_341741-front-US.jpg')"
+const item_add5 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Hat', 20.00, 0, 'https://cdn.shopify.com/s/files/1/0066/8945/6243/products/Impala_skate_inline_skates_blades_rollerblades_blue_180x.jpg?v=1584306107')"
 
 const set_up2 = [item_add1, item_add2, item_add3, item_add4, item_add5];
 

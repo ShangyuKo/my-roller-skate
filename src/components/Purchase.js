@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
-import useFetch from "./components/useFetch";
-import ItemList from "./components/ItemList";
+import useFetch from "./useFetch";
+import ItemList from "./ItemList";
 import axios from 'axios';
 import { useHistory } from "react-router";
 
