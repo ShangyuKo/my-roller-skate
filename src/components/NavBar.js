@@ -14,6 +14,7 @@ function  NavBar(){
   const handleClick = () => setClick(!click);
   const history = useHistory();
   const closeMobileMenu = () => setClick(false);
+<<<<<<< HEAD
  
   const onMouseEnter = () =>{
     if(window.innerWidth < 960){
@@ -30,6 +31,8 @@ function  NavBar(){
     }
   };
 
+=======
+>>>>>>> 2cf0bc1 (aboutus)
   function refreshPage(){ 
     window.location.href = '/about'
     };
@@ -54,6 +57,16 @@ function  NavBar(){
               Products <i className='fas fa-caret-down'/>
             </Link>
             {dropdown && <Dropdown/>}
+          </li>
+          <li className='nav-item'>
+            {/* don not have the page for services yet */}
+            <Link to='/about' className='nav-links' onClick={refreshPage}>
+              About Us <i className='fas fa-caret-down'/>
+            </Link>
+            {/* <div>
+            <button onClick={refreshPage} type="button" />
+            About Us */}
+            {/* </div> */}
           </li>
           <li className='nav-item'>
             {/* don not have the page for services yet */}
