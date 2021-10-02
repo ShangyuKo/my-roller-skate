@@ -14,7 +14,6 @@ function  NavBar(){
   const handleClick = () => setClick(!click);
   const history = useHistory();
   const closeMobileMenu = () => setClick(false);
-<<<<<<< HEAD
  
   const onMouseEnter = () =>{
     if(window.innerWidth < 960){
@@ -31,8 +30,6 @@ function  NavBar(){
     }
   };
 
-=======
->>>>>>> 2cf0bc1 (aboutus)
   function refreshPage(){ 
     window.location.href = '/about'
     };
