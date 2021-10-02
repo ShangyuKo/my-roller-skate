@@ -1,13 +1,18 @@
 import React, {useState} from 'react';
 import {Button} from './Button';
 import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { Redirect } from 'react-router';
 import './Navbar.css';
 import Dropdown from './Dropdown';
 
+
 function  NavBar(){
+  // const history = useHistory();
   const [click, setClick] = useState(false);
   const [dropdown,setDropDown] = useState(false);
   const handleClick = () => setClick(!click);
+  const history = useHistory();
   const closeMobileMenu = () => setClick(false);
  
   const onMouseEnter = () =>{
@@ -25,6 +30,9 @@ function  NavBar(){
     }
   };
 
+  function refreshPage(){ 
+    window.location.href = '/about'
+    };
   return (
     <>
       <nav className='navbar'>
@@ -41,19 +49,21 @@ function  NavBar(){
             </Link>
           </li>
           <li className='nav-item'>
-            {/* don not have the page for services yet */}
-            <Link to='/servicecs' className='nav-links' onClick={closeMobileMenu}>
-              Servives 
-            </Link>
-          </li>
-          <li className='nav-item'
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}>
             {/* don not have the page for products yet */}
             <Link to='/product' className='nav-links' onClick={closeMobileMenu}>
               Products <i className='fas fa-caret-down'/>
             </Link>
             {dropdown && <Dropdown/>}
+          </li>
+          <li className='nav-item'>
+            {/* don not have the page for services yet */}
+            <Link to='/about' className='nav-links' onClick={refreshPage}>
+              About Us <i className='fas fa-caret-down'/>
+            </Link>
+            {/* <div>
+            <button onClick={refreshPage} type="button" />
+            About Us */}
+            {/* </div> */}
           </li>
           <li className='nav-item'>
             {/* don not have the page for contact yet */}
