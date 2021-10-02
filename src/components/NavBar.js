@@ -10,6 +10,21 @@ function  NavBar(){
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
  
+  const onMouseEnter = () =>{
+    if(window.innerWidth < 960){
+      setDropDown(false)
+    }else{
+      setDropDown(true)
+    }
+  };
+  const onMouseLeave = () =>{
+    if(window.innerWidth < 960){
+      setDropDown(false)
+    }else{
+      setDropDown(false)
+    }
+  };
+
   return (
     <>
       <nav className='navbar'>
@@ -28,22 +43,24 @@ function  NavBar(){
           <li className='nav-item'>
             {/* don not have the page for services yet */}
             <Link to='/servicecs' className='nav-links' onClick={closeMobileMenu}>
-              Servives <i className='fas fa-caret-down'/>
+              Servives 
             </Link>
           </li>
-          <li className='nav-item'>
+          <li className='nav-item'
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}>
             {/* don not have the page for products yet */}
             <Link to='/product' className='nav-links' onClick={closeMobileMenu}>
               Products <i className='fas fa-caret-down'/>
             </Link>
+            {dropdown && <Dropdown/>}
           </li>
           <li className='nav-item'>
             {/* don not have the page for contact yet */}
             <Link to='/contact' className='nav-links' onClick={closeMobileMenu}>
-              Contact <i className='fas fa-caret-down'/>
+              Contact
             </Link>
           </li>
-          {dropdown && <Dropdown/>}
           <li className='nav-item'>
             {/* don not have the page for signup yet */}
             <Link to='/sign-up' className='nav-links'>
