@@ -66,16 +66,6 @@ function  NavBar(){
             {/* </div> */}
           </li>
           <li className='nav-item'>
-            {/* don not have the page for services yet */}
-            <Link to='/about' className='nav-links' onClick={refreshPage}>
-              About Us <i className='fas fa-caret-down'/>
-            </Link>
-            {/* <div>
-            <button onClick={refreshPage} type="button" />
-            About Us */}
-            {/* </div> */}
-          </li>
-          <li className='nav-item'>
             {/* don not have the page for contact yet */}
             <Link to='/contact' className='nav-links' onClick={closeMobileMenu}>
               Contact
