@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import axios from 'axios';
+import './Payment.css';
 
 const Payment = () => {
     const [creditCardNumber, setCreditCardNumber] = useState(null);

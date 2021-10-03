@@ -3,6 +3,7 @@ import useFetch from "./useFetch";
 import ItemList from "./ItemList";
 import axios from 'axios';
 import { useHistory } from "react-router";
+import './Purchase.css'
 
 
 const Purchase = () => {

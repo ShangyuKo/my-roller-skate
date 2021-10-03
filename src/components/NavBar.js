@@ -49,8 +49,11 @@ function  NavBar(){
               Home
             </Link>
           </li>
-          <li className='nav-item'>
+          <li className='nav-item'  className='nav-item'
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}>
             {/* don not have the page for products yet */}
+            
             <Link to='/product' className='nav-links' onClick={closeMobileMenu}>
               Products <i className='fas fa-caret-down'/>
             </Link>
