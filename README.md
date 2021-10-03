@@ -37,10 +37,14 @@ npm i --save-dev @types/react-router-dom
 
 - step
 ```bash
-XAMPP 啟用 MySQL 及 Apache 服務，接著打開 phpMyAdmin
-cd sever 
-node app.js
-open new commander
-cd src
-npm start
+First:
+  XAMPP 啟用 MySQL 及 Apache 服務，接著打開 phpMyAdmin
+Second:(type in the command below into terminal)
+  cd sever 
+  node app.js
+Then: 
+  open a new commander
+Third:(type in the command below into the just opened new terminal)
+  cd src
+  npm start
 ```
