@@ -13,49 +13,62 @@ const corsOptions ={
 
 app.use(cors(corsOptions));
 
+// set access port
 app.use(express.json());
 app.listen(port, () => {
   console.log(`RUN http://localhost:${port}`);
 });
 
+// default display
 app.get('/', (req, res) => {
     res.send('Hello World!');
   });
 
-  
-const qrop_item = "DROP TABLE Item";
-const creat_item = "CREATE TABLE Item ( Id int NOT NULL AUTO_INCREMENT, Item varchar(255), Price DOUBLE, quantity int, PicLink varchar(255), PRIMARY KEY (Id) );";
-const qrop_order = "DROP TABLE Item_order";
-const creat_order = "CREATE TABLE Item_order ( Id int NOT NULL AUTO_INCREMENT, \
-         Item varchar(255), Price DOUBLE, quantity int, PRIMARY KEY (Id)  )";
+// DROP table if exists, then CREATE
+const qrop_item = "DROP TABLE IF EXISTS Item";
+const creat_item = "CREATE TABLE Item ( \
+                      Id int NOT NULL AUTO_INCREMENT, \
+                      Item varchar(255), \
+                      Price DOUBLE, \
+                      quantity int, \
+                      PicLink varchar(255), \
+                      PRIMARY KEY (Id) );";
+const qrop_order = "DROP TABLE IF EXISTS Item_order";
+const creat_order = "CREATE TABLE Item_order ( \
+                      Id int NOT NULL AUTO_INCREMENT, \
+                      Item varchar(255), \
+                      Price DOUBLE, \
+                      quantity int, \
+                      PRIMARY KEY (Id) )";
+const qrop_card = "DROP TABLE IF EXISTS Card";
+const creat_card = "CREATE TABLE Card ( \
+                      Id int NOT NULL AUTO_INCREMENT, \
+                      card_number varchar(255), \
+                      expiration_date varchar(255), \
+                      cvvCode varchar(255), \
+                      holder_name varchar(255), \
+                      PRIMARY KEY (Id) )";
+const qrop_address = "DROP TABLE IF EXISTS Address";
+const creat_address = "CREATE TABLE Address ( \
+                        Id int NOT NULL AUTO_INCREMENT, \
+                        name varchar(255), \
+                        addressLine1 varchar(255), \
+                        addressLine2 varchar(255), \
+                        city varchar(255), \
+                        state varchar(255), \
+                        zip varchar(255), \
+                        PRIMARY KEY (Id) )";
+const qrop_contactUsMessage = "DROP TABLE IF EXISTS ContactUs_Message";
+const creat_contactUsMessage = "CREATE TABLE ContactUs_Message ( \
+                                  Id int NOT NULL AUTO_INCREMENT, \
+                                  content varchar(255), \
+                                  PRIMARY KEY (Id) )";
 
-const qrop_card = "DROP TABLE Card";
-const creat_card = "CREATE TABLE Card ( Id int NOT NULL AUTO_INCREMENT, card_number varchar(255), \
-                     expiration_date varchar(255), cvvCode varchar(255), \
-                    holder_name varchar(255), PRIMARY KEY (Id) )";
-const qrop_address = "DROP TABLE Address";
-const creat_address = "CREATE TABLE Address ( Id int NOT NULL AUTO_INCREMENT, name varchar(255), addressLine1 varchar(255), \
-                     addressLine2 varchar(255), city varchar(255), \
-                     state varchar(255), zip varchar(255), PRIMARY KEY (Id) )";
+const set_up = [qrop_item, creat_item, qrop_order, creat_order, qrop_card, creat_card, qrop_address, creat_address, qrop_contactUsMessage, creat_contactUsMessage];
 
-const set_up = [qrop_item, creat_item, qrop_order, creat_order, qrop_card, creat_card, qrop_address, creat_address];
-// const set_up = [qrop_item, creat_item, creat_order, creat_card, creat_address];
-// const set_up = [creat_order];
+set_up.forEach(element => db.query(element));
 
-
-set_up.forEach(element =>
-    db.query(element));
-
-
-// set_up.forEach(element =>
-//     db.query(element), function(err, rows) {
-//         if (err) throw err;
-//         // console.log('Response: ', rows);}
-//     }));
-
-// const creat_item = "CREATE TABLE Item ( Id int NOT NULL AUTO_INCREMENT, Item varchar(255), Price int, quantity int, PRIMARY KEY (Id) );";
-
-
+// INSERT default data
 const item_add1 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Roller Skate', 399.95, 0, 'https://media.dollskill.com/media/1qVrP7p2r7z7HDduWyE9QzFM179S12Lk-34.jpg')"
 const item_add2 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Helmet', 69.95, 0, 'https://cdn.shopify.com/s/files/1/0836/6919/products/green_bike_helmet_001_600x.jpg?v=1611711971')"
 const item_add3 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Pads', 74.95, 0, 'https://www.rei.com/media/8be42fa2-c3a3-4517-85c1-e13dea1213f5?size=784x588')"
@@ -67,12 +80,6 @@ const set_up2 = [item_add1, item_add2, item_add3, item_add4, item_add5];
 set_up2.forEach(element =>
     db.query(element));
 
-// set_up2.forEach(element =>
-//     db.query(element, function(err, rows) {
-//         if (err) throw err;
-//         // console.log('Response: ', rows);
-//     }));
-
 const order_add1 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Roller Skate', 399.95, 0);"
 const order_add2 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Helmet', 69.95, 0);"
 const order_add3 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Pads', 74.95, 0);"
@@ -81,16 +88,15 @@ const order_add5 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Hat'
 
 const set_up3 = [order_add1, order_add2, order_add3, order_add4, order_add5];
 
-
 set_up3.forEach(element =>
     db.query(element));
-        
+
+// set access API
 app.get("/item_query", function(req, res) {
     const result = db.query('select * from Item');
     console.log('data: ', result);
     return res.send(result)
 });
-
 
 app.post("/depost_order", function(req, res) {
   var name = req.body.name;
@@ -120,13 +126,11 @@ app.post("/depost_card", function(req, res) {
     return res.send(result)
     });
 
-
 app.get("/card_query", function(req, res) {
     const result = db.query('select * from Card')
     console.log('card_query: ', result);
     return res.send(result)
 });
-
 
 app.post("/depost_address", function(req, res) {
     var name = req.body.name;
@@ -141,9 +145,25 @@ app.post("/depost_address", function(req, res) {
     return res.send(result)
 });
 
-
 app.get("/address_query", function(req, res) {
     const result = db.query('select * from Address')
     console.log('address_query: ', result);
     return res.send(result)
+});
+
+app.post("/depost_contactUsMessage", function(req, res) {
+  var content = req.body.content;
+  const result = db.query(
+    `INSERT INTO ContactUs_Message (content) VALUES ('${content}');`);
+  // console.log('depost_contactUsMessage: ', result);
+  const returnId = db.query('select LAST_INSERT_ID()')
+  console.log('returnId: ', returnId);
+  return res.send(returnId)
+});
+
+app.get("/contactUsMessage_query", function(req, res) {
+  const Id = req.body.Id;
+  const result = db.query(`select * from ContactUs_Message where Id = ${Id}`)
+  console.log('contactUsMessage_query: ', result);
+  return res.send(result)
 });
