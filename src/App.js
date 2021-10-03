@@ -7,6 +7,8 @@ import Confirm from "./components/Confirm";
 import About from "./components/about_us";
 import NavBar from "./components/NavBar";
 import ContactUs from "./components/ContactUs";
+import Home from "./components/pages/Home"
+import Footer from "./components/Footer";
 // npx json-server --watch data/db.json --port 8000
 function App(){
 
@@ -42,6 +44,9 @@ function App(){
             </Route>
           </Switch>
         </div>
+        <Router>
+          <Footer/>
+        </Router>
       </div>  
     </Router>
   );
