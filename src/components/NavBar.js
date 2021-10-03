@@ -30,21 +30,22 @@ function  NavBar(){
     }
   };
 
-  function refreshPage(){ 
-    window.location.href = '/about'
-    };
+  function refreshPage(link){ 
+    window.location.href = link
+  }
+  
   return (
     <>
       <nav className='navbar'>
-        <Link to='/' className='navbar-logo'>
-          myrolerskates
+        <Link to='/my-roller-skate' className='navbar-logo' onClick={() => {refreshPage('/my-roller-skate')}}>
+          MyRolerSkates
         </Link>
         <div className='menu-icon' onClick={handleClick}>
           <i className={click ? 'fas fa-times': 'fas fa-bars'}/>
         </div>
         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='nav-item'>
-            <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+            <Link to='/my-roller-skate' className='nav-links' onClick={() => {refreshPage('/my-roller-skate')}}>
               Home
             </Link>
           </li>
@@ -57,7 +58,7 @@ function  NavBar(){
           </li>
           <li className='nav-item'>
             {/* don not have the page for services yet */}
-            <Link to='/about' className='nav-links' onClick={refreshPage}>
+            <Link to='/about' className='nav-links' onClick={() => {refreshPage('/about')}}>
               About Us <i className='fas fa-caret-down'/>
             </Link>
             {/* <div>
@@ -67,8 +68,8 @@ function  NavBar(){
           </li>
           <li className='nav-item'>
             {/* don not have the page for contact yet */}
-            <Link to='/contact' className='nav-links' onClick={closeMobileMenu}>
-              Contact
+            <Link to='/contactUs' className='nav-links' onClick={() => {refreshPage('/contactUs')}}>
+              Contact Us
             </Link>
           </li>
           <li className='nav-item'>

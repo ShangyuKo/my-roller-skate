@@ -67,6 +67,7 @@ const Confirm = () => {
             order.shippingInfo.addressLine1 = data_[0].addressLine1
             order.shippingInfo.addressLine2 = data_[0].addressLine2
             order.shippingInfo.city = data_[0].city
+            order.shippingInfo.state = data_[0].state
             order.shippingInfo.zip = data_[0].zip
             setOrder({...order});
         });
