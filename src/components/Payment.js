@@ -30,10 +30,10 @@ const Payment = () => {
             cvvCode: ccvCode,
             holder_name: cardHolderName,
         })
-        .then((res) => {
-          alert("success");
-        //   props.history.push("/signin");
-        })
+        // .then((res) => {
+        //   alert("success");
+        // //   props.history.push("/signin");
+        // })
         .catch((e) => {
           console.log(e);
           alert("failed", e);

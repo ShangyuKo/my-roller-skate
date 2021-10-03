@@ -42,11 +42,16 @@ const set_up = [qrop_item, creat_item, qrop_order, creat_order, qrop_card, creat
 // const set_up = [qrop_item, creat_item, creat_order, creat_card, creat_address];
 // const set_up = [creat_order];
 
+
 set_up.forEach(element =>
-    db.query(element, function(err, rows) {
-        if (err) throw err;
-        // console.log('Response: ', rows);}
-    }));
+    db.query(element));
+
+
+// set_up.forEach(element =>
+//     db.query(element), function(err, rows) {
+//         if (err) throw err;
+//         // console.log('Response: ', rows);}
+//     }));
 
 // const creat_item = "CREATE TABLE Item ( Id int NOT NULL AUTO_INCREMENT, Item varchar(255), Price int, quantity int, PRIMARY KEY (Id) );";
 
@@ -60,10 +65,13 @@ const item_add5 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Ha
 const set_up2 = [item_add1, item_add2, item_add3, item_add4, item_add5];
 
 set_up2.forEach(element =>
-    db.query(element, function(err, rows) {
-        if (err) throw err;
-        // console.log('Response: ', rows);
-    }));
+    db.query(element));
+
+// set_up2.forEach(element =>
+//     db.query(element, function(err, rows) {
+//         if (err) throw err;
+//         // console.log('Response: ', rows);
+//     }));
 
 const order_add1 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Roller Skate', 399.95, 0);"
 const order_add2 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Helmet', 69.95, 0);"
@@ -73,61 +81,51 @@ const order_add5 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Hat'
 
 const set_up3 = [order_add1, order_add2, order_add3, order_add4, order_add5];
 
-set_up3.forEach(element =>
-    db.query(element, function(err, rows) {
-        if (err) throw err;
-        // console.log('Response: ', rows);
-    }));
-        
 
+set_up3.forEach(element =>
+    db.query(element));
+        
 app.get("/item_query", function(req, res) {
-    db.query('select * from Item', function(err, result) {
-        if (err) throw err;
-        console.log('Response: ', result);
-        return res.send(result)
-});  });
+    const result = db.query('select * from Item');
+    console.log('data: ', result);
+    return res.send(result)
+});
 
 
 app.post("/depost_order", function(req, res) {
   var name = req.body.name;
   var quantity = req.body.quantity;
-  db.query(
-    `UPDATE Item_order SET quantity = ${quantity} WHERE Id = ${name};`,
-    function(err, rows, fields) {
-        if (err) throw err;
-        console.log('Response: ', rows);}
+  const result = db.query(
+    `UPDATE Item_order SET quantity = ${quantity} WHERE Id = ${name};`
   );
+  console.log('depost_order: ', result);
+  return res.send(result)
 });
 
 
 app.get("/order_query", function(req, res) {
-    db.query('select * from Item_order', function(err, result) {
-        if (err) throw err;
-        console.log('Response: ', result);
-        return res.send(result)
-});  });
-
+    const result = db.query('select * from Item_order')
+    console.log('order_query: ', result);
+    return res.send(result)
+});
 
 app.post("/depost_card", function(req, res) {
     var card_number = req.body.card_number;
     var expiration_date = req.body.expiration_date;
     var cvvCode = req.body.cvvCode;
     var holder_name = req.body.holder_name;
-    db.query(
-      `INSERT INTO Card (card_number, expiration_date, cvvCode, holder_name) VALUES ('${card_number}', '${expiration_date}', '${cvvCode}', '${holder_name}');`,
-      function(err, rows, fields) {
-          if (err) throw err;
-          console.log('Response: ', rows);}
-    );
-  });
+    const result = db.query(
+      `INSERT INTO Card (card_number, expiration_date, cvvCode, holder_name) VALUES ('${card_number}', '${expiration_date}', '${cvvCode}', '${holder_name}');`);
+    console.log('depost_card: ', result);
+    return res.send(result)
+    });
 
 
 app.get("/card_query", function(req, res) {
-    db.query('select * from Card', function(err, result) {
-        if (err) throw err;
-        console.log('Response: ', result);
-        return res.send(result)
-});  });
+    const result = db.query('select * from Card')
+    console.log('card_query: ', result);
+    return res.send(result)
+});
 
 
 app.post("/depost_address", function(req, res) {
@@ -137,18 +135,15 @@ app.post("/depost_address", function(req, res) {
     var city = req.body.city;
     var state = req.body.state;
     var zip = req.body.zip;
-    db.query(
-      `INSERT INTO Address (name, addressLine1, addressLine2, city, state, zip) VALUES ('${name}', '${address_1}', '${address_2}', '${city}', '${state}', '${zip}');`,
-      function(err, rows, fields) {
-          if (err) throw err;
-          console.log('Response: ', rows);}
-    );
+    const result = db.query(
+      `INSERT INTO Address (name, addressLine1, addressLine2, city, state, zip) VALUES ('${name}', '${address_1}', '${address_2}', '${city}', '${state}', '${zip}');`);
+    console.log('depost_address: ', result);
+    return res.send(result)
 });
 
 
 app.get("/address_query", function(req, res) {
-    db.query('select * from Address', function(err, result) {
-        if (err) throw err;
-        console.log('Response: ', result);
-        return res.send(result)
-});  });
+    const result = db.query('select * from Address')
+    console.log('address_query: ', result);
+    return res.send(result)
+});

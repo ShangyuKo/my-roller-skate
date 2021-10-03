@@ -35,10 +35,10 @@ const Shipping = () => {
             state: state,
             zip: zip,
         })
-        .then((res) => {
-          alert("success");
-        //   props.history.push("/signin");
-        })
+        // .then((res) => {
+        //   alert("success");
+        // //   props.history.push("/signin");
+        // })
         .catch((e) => {
           console.log(e);
           alert("failed", e);
