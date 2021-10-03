@@ -22,7 +22,7 @@ function App(){
         <div className="content">
           <Switch>
             <Route exact path="/">
-              <Purchase order/>
+              <Purchase/>
             </Route>
             <Route path="/payment">
               <Payment/>
