@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar";
 import ContactUs from "./components/ContactUs";
 import Home from "./components/pages/Home"
 import Footer from "./components/Footer";
+import Products from "./components/pages/Products";
 // npx json-server --watch data/db.json --port 8000
 function App(){
 
@@ -24,6 +25,9 @@ function App(){
         </Router>
         <div className="content">
           <Switch>
+            <Route path='/Products'>
+              <Products/>
+            </Route>
             <Route path="/my-roller-skate">
               <Purchase/>
             </Route>
@@ -39,6 +43,8 @@ function App(){
             <Route path="/confirm">
               <Confirm />
             </Route>
+            <Route path='/' exact component={Home}/>
+          
             <Route path="/contactUs">
               <ContactUs />
             </Route>

@@ -7,6 +7,7 @@ import './Navbar.css';
 import Dropdown from './Dropdown';
 
 
+
 function  NavBar(){
   // const history = useHistory();
   const [click, setClick] = useState(false);
@@ -45,22 +46,20 @@ function  NavBar(){
         </div>
         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='nav-item'>
-            <Link to='/my-roller-skate' className='nav-links' onClick={() => {refreshPage('/my-roller-skate')}}>
+            <Link to='/' className='nav-links' OnClick={() => {refreshPage('/Home')}}>
               Home
             </Link>
           </li>
           <li className='nav-item'  className='nav-item'
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}>
-            {/* don not have the page for products yet */}
             
-            <Link to='/product' className='nav-links' onClick={closeMobileMenu}>
+            <Link to='/Products' className='nav-links' onClick={closeMobileMenu}>
               Products <i className='fas fa-caret-down'/>
             </Link>
             {dropdown && <Dropdown/>}
           </li>
           <li className='nav-item'>
-            {/* don not have the page for services yet */}
             <Link to='/about' className='nav-links' onClick={() => {refreshPage('/about')}}>
               About Us <i className='fas fa-caret-down'/>
             </Link>
@@ -70,7 +69,6 @@ function  NavBar(){
             {/* </div> */}
           </li>
           <li className='nav-item'>
-            {/* don not have the page for contact yet */}
             <Link to='/contactUs' className='nav-links' onClick={() => {refreshPage('/contactUs')}}>
               Contact Us
             </Link>
@@ -78,7 +76,12 @@ function  NavBar(){
           <li className='nav-item'>
             {/* don not have the page for signup yet */}
             <Link to='/sign-up' className='nav-links'>
-              <Button/>
+              <Button className='btns' buttonStyle='btn--primary' buttonSize='btn--large'>
+                Sign Up!
+            </Button>
+
+
+
             </Link>
           </li>
         </ul>

@@ -4,6 +4,7 @@ import ItemList from "./ItemList";
 import axios from 'axios';
 import { useHistory } from "react-router";
 import './Purchase.css'
+import { Button } from './Button';
 
 
 const Purchase = () => {
@@ -62,7 +63,10 @@ const Purchase = () => {
                         delOneItem={delOneItem} 
                         title="All Products"/>
             }
-            <button style={{float: 'right'}} onClick={() => purchaseHandler()}>Purchase</button>
+            {/* <Button className='btns' buttonStyle='btn--outline' buttonSize='btn--large' onClick={() => purchaseHandler()}>
+                Purchase
+            </Button> */}
+            <button className='btn' onClick={() => purchaseHandler()}>Purchase</button>
         </div>
     );
 }

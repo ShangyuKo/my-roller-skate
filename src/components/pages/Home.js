@@ -1,17 +1,13 @@
-import React from 'react'
+import React from 'react';
+import '../../App.css';
+import VideoSection from '../videoSection';
 
-import NavBar from "../NavBar";
-import Footer from '../Footer'
-import AboutUS from '../about_us'
-
-function Home(){
-    retrun (
-        <>
-            <NavBar/>
-            <AboutUS/>
-            <Footer/>
-        </>
-    )
+function Home() {
+  return (
+    <>
+      <VideoSection />
+    </>
+  );
 }
 
 export default Home;

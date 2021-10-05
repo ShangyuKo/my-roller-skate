@@ -10,14 +10,15 @@ function Dropdown(){
         <>
             <ul onClick={handleClick} className={click ? 'dropdown-menu clicked' : 'dropdown-menu'}>
                 {MenuItems.map((item,index) => {
-                    return (
-                        <li key={index}>
-                            <Link className={item.cName} to={item.path} onClick={() => setClick(false)}>
-                                {item.title}
-                            </Link>
-                        </li>
+                     if(index < 5)
+                        return (
+                            <li key={index}>
+                                <Link to='/Products' className={item.cName} onClick={() => setClick(false)}>
+                                    {item.title}
+                                </Link>
+                            </li>
 
-                    )
+                        )
                 })}
 
 
