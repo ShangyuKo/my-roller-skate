@@ -4,7 +4,7 @@ import { Button } from './Button';
 import './videoSection.css';
 import ReactPlayer from 'react-player';
 
-function HeroSection() {
+const HeroSection = () =>{
 
   return (
     <div className='hero-container'>

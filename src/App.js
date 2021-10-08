@@ -7,9 +7,10 @@ import Confirm from "./components/Confirm";
 import About from "./components/about_us";
 import NavBar from "./components/NavBar";
 import ContactUs from "./components/ContactUs";
-import Home from "./components/pages/Home"
+import Home from "./components/Home"
 import Footer from "./components/Footer";
-import Products from "./components/pages/Products";
+import Products from "./components/Products";
+import VideoSection from './components/videoSection';
 // npx json-server --watch data/db.json --port 8000
 function App(){
 
@@ -25,27 +26,25 @@ function App(){
         </Router>
         <div className="content">
           <Switch>
-            <Route path='/Products'>
-              <Products/>
+            <Route exact path="/my-roller-skate">
+              <VideoSection/>
             </Route>
-            <Route path="/my-roller-skate">
+            <Route exact path='/purchase'>
               <Purchase/>
             </Route>
-            <Route path="/payment">
+            <Route exact path="/payment">
               <Payment/>
             </Route>
-            <Route path="/about">
+            <Route exact path="/about">
               <About/>
             </Route>
-            <Route path="/shipping">
+            <Route exact path="/shipping">
               <Shipping/>
             </Route>
-            <Route path="/confirm">
+            <Route exact path="/confirm">
               <Confirm />
             </Route>
-            <Route path='/' exact component={Home}/>
-          
-            <Route path="/contactUs">
+            <Route exact path="/contactUs">
               <ContactUs />
             </Route>
           </Switch>

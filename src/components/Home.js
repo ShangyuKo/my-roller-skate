@@ -1,6 +1,6 @@
 import React from 'react';
-import '../../App.css';
-import VideoSection from '../videoSection';
+import '../App.css';
+import VideoSection from './videoSection';
 
 function Home() {
   return (

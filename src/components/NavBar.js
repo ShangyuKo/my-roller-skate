@@ -34,6 +34,11 @@ function  NavBar(){
   function refreshPage(link){ 
     window.location.href = link
   }
+
+  function both(link){
+    refreshPage(link);
+    setClick(false)
+}
   
   return (
     <>
@@ -46,16 +51,19 @@ function  NavBar(){
         </div>
         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='nav-item'>
-            <Link to='/' className='nav-links' OnClick={() => {refreshPage('/Home')}}>
+            {/* <Link to='/my-roller-skate' className='nav-links' OnClick={() => {refreshPage('/my-roller-skate')}}>
               Home
+            </Link> */}
+
+            <Link to='/my-roller-skate' className='nav-links' onClick={() => {refreshPage('/my-roller-skate')}}>
+            Home
             </Link>
           </li>
-          <li className='nav-item'  className='nav-item'
+          <li className='nav-item'
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}>
-            
-            <Link to='/Products' className='nav-links' onClick={closeMobileMenu}>
-              Products <i className='fas fa-caret-down'/>
+            <Link to='/purchase' className='nav-links' onClick={() => {refreshPage('/purchase')}}>
+             Products<i className='fas fa-caret-down'/>
             </Link>
             {dropdown && <Dropdown/>}
           </li>
@@ -63,10 +71,6 @@ function  NavBar(){
             <Link to='/about' className='nav-links' onClick={() => {refreshPage('/about')}}>
               About Us <i className='fas fa-caret-down'/>
             </Link>
-            {/* <div>
-            <button onClick={refreshPage} type="button" />
-            About Us */}
-            {/* </div> */}
           </li>
           <li className='nav-item'>
             <Link to='/contactUs' className='nav-links' onClick={() => {refreshPage('/contactUs')}}>
@@ -78,10 +82,7 @@ function  NavBar(){
             <Link to='/sign-up' className='nav-links'>
               <Button className='btns' buttonStyle='btn--primary' buttonSize='btn--large'>
                 Sign Up!
-            </Button>
-
-
-
+              </Button>
             </Link>
           </li>
         </ul>
