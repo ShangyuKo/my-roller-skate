@@ -1,3 +1,5 @@
+const utils = require("./utils");
+
 const express = require("express");
 const db = require('./db');
 const app = express();
@@ -36,6 +38,7 @@ const creat_item = "CREATE TABLE Item ( \
 const qrop_order = "DROP TABLE IF EXISTS Item_order";
 const creat_order = "CREATE TABLE Item_order ( \
                       Id int NOT NULL AUTO_INCREMENT, \
+                      customerId varchar(255), \
                       Item varchar(255), \
                       Price DOUBLE, \
                       quantity int, \
@@ -43,6 +46,7 @@ const creat_order = "CREATE TABLE Item_order ( \
 const qrop_card = "DROP TABLE IF EXISTS Card";
 const creat_card = "CREATE TABLE Card ( \
                       Id int NOT NULL AUTO_INCREMENT, \
+                      customerId varchar(255), \
                       card_number varchar(255), \
                       expiration_date varchar(255), \
                       cvvCode varchar(255), \
@@ -51,6 +55,7 @@ const creat_card = "CREATE TABLE Card ( \
 const qrop_address = "DROP TABLE IF EXISTS Address";
 const creat_address = "CREATE TABLE Address ( \
                         Id int NOT NULL AUTO_INCREMENT, \
+                        customerId varchar(255), \
                         name varchar(255), \
                         addressLine1 varchar(255), \
                         addressLine2 varchar(255), \
@@ -80,16 +85,6 @@ const set_up2 = [item_add1, item_add2, item_add3, item_add4, item_add5];
 set_up2.forEach(element =>
     db.query(element));
 
-const order_add1 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Roller Skate', 399.95, 0);"
-const order_add2 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Helmet', 69.95, 0);"
-const order_add3 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Pads', 74.95, 0);"
-const order_add4 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Wheels', 32.00, 0);"
-const order_add5 = "INSERT INTO Item_order (Item, Price, quantity) VALUES ('Hat', 20.00, 0);"
-
-const set_up3 = [order_add1, order_add2, order_add3, order_add4, order_add5];
-
-set_up3.forEach(element =>
-    db.query(element));
 
 // set access API
 app.get("/item_query", function(req, res) {
@@ -98,54 +93,27 @@ app.get("/item_query", function(req, res) {
     return res.send(result)
 });
 
+
 app.post("/depost_order", function(req, res) {
   var names = req.body.names;
   var quantity = req.body.quantity;
+  var user_uid = req.body.user_uid;
 
-  const id_quantiy = new Map();
-  const new_id_quantiy = new Map();
-  
-  for (var i = 0; i < names.length; i++) {
-      var name = names[i];
-      var num = quantity[i];
-      id_quantiy[name] = num;
-  }
-  
-  const result1 = db.query('select * from Item');
-  const result_json1 = JSON.stringify(result1);
-  const result_json =  JSON.parse(result_json1);
-  // console.log('result_json: ', result_json);
-  // console.log('result_json.length: ', result_json.length);
-
-  // console.log('id_quantiy: ', id_quantiy);
-
-  var flag = true;
-  var response = '';
-  for (var i = 0; i < result_json.length; i++) {
-    var json_e = result_json[i];
-    var id_key = json_e["Id"];
-    // console.log('id_key = ', id_key);
-    // console.log('id_quantiy.has(id_key) ', id_key in id_quantiy);
-
-    if (id_key in id_quantiy) {
-      if (id_quantiy[id_key] > json_e["quantity"]){
-        flag = false
-        response += json_e["Item"] + ' only has = ' + json_e["quantity"].toString() + " in stock" + '\n'
-      }
-      else{
-        new_id_quantiy[json_e["Id"]] = json_e["quantity"] - id_quantiy[id_key];
-      }
-    }
-  }
-  // console.log('new_id_quantiy: ', new_id_quantiy);
-  // console.log('flag: ', flag);
+  const [flag, order_id_quantiy, n_id_quantiy, response] = utils.check_quantity(names, quantity);
+  const uid_exist_flag = utils.check_uid(user_uid);
 
   if (flag == true) {
-    for (const [Id, value] of Object.entries(new_id_quantiy)) {
-        // console.log(key, value);
-        // console.log(Id + " = " + value);
 
-        const result1 = db.query(`UPDATE Item_order SET quantity = ${id_quantiy[Id]} WHERE Id = ${Id};`);
+    if (uid_exist_flag == false){
+      utils.set_up_user_order_table(user_uid);
+    }
+
+    exist_user_order = utils.check_user_order(user_uid);
+
+    for (const [Id, value] of Object.entries(n_id_quantiy)) {
+
+        var update_oder = order_id_quantiy[Id] + exist_user_order[Id];
+        const result1 = db.query(`UPDATE Item_order SET quantity = ${update_oder} WHERE Id = ${Id} AND customerId = '${user_uid}';`);
         console.log('depost_order 1: ', result1);
         
         const result2 = db.query(`UPDATE Item SET quantity = ${value} WHERE Id = ${Id};`);
@@ -154,11 +122,13 @@ app.post("/depost_order", function(req, res) {
   }
   
   return res.send(response)
+
 });
 
 
-app.get("/order_query", function(req, res) {
-    const result = db.query('select * from Item_order')
+app.post("/order_query", function(req, res) {
+    var user_uid = req.body.user_uid;
+    const result = db.query(`select * from Item_order  WHERE customerId = '${user_uid}';`)
     console.log('order_query: ', result);
     return res.send(result)
 });
@@ -168,14 +138,16 @@ app.post("/depost_card", function(req, res) {
     var expiration_date = req.body.expiration_date;
     var cvvCode = req.body.cvvCode;
     var holder_name = req.body.holder_name;
+    var user_uid = req.body.user_uid;
     const result = db.query(
-      `INSERT INTO Card (card_number, expiration_date, cvvCode, holder_name) VALUES ('${card_number}', '${expiration_date}', '${cvvCode}', '${holder_name}');`);
+      `INSERT INTO Card (customerId, card_number, expiration_date, cvvCode, holder_name) VALUES ('${user_uid}', '${card_number}', '${expiration_date}', '${cvvCode}', '${holder_name}');`);
     console.log('depost_card: ', result);
     return res.send(result)
     });
 
-app.get("/card_query", function(req, res) {
-    const result = db.query('select * from Card')
+app.post("/card_query", function(req, res) {
+    var user_uid = req.body.user_uid;
+    const result = db.query(`select * from Card  WHERE customerId = '${user_uid}';`)
     console.log('card_query: ', result);
     return res.send(result)
 });
@@ -187,14 +159,16 @@ app.post("/depost_address", function(req, res) {
     var city = req.body.city;
     var state = req.body.state;
     var zip = req.body.zip;
+    var user_uid = req.body.user_uid;
     const result = db.query(
-      `INSERT INTO Address (name, addressLine1, addressLine2, city, state, zip) VALUES ('${name}', '${address_1}', '${address_2}', '${city}', '${state}', '${zip}');`);
+      `INSERT INTO Address (customerId, name, addressLine1, addressLine2, city, state, zip) VALUES ('${user_uid}', '${name}', '${address_1}', '${address_2}', '${city}', '${state}', '${zip}');`);
     console.log('depost_address: ', result);
     return res.send(result)
 });
 
-app.get("/address_query", function(req, res) {
-    const result = db.query('select * from Address')
+app.post("/address_query", function(req, res) {
+    var user_uid = req.body.user_uid;
+    const result = db.query(`select * from Address  WHERE customerId = '${user_uid}';`)
     console.log('address_query: ', result);
     return res.send(result)
 });

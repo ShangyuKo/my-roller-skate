@@ -3,10 +3,12 @@ import { useHistory } from "react-router";
 import axios from 'axios';
 import useFetch from "./useFetch";
 
-const Confirm = () => {
+const Confirm = ({user_uid}) => {
+
+    console.log('user_uid: ', user_uid);
+
     const history = useHistory();
     const [productsIdx, setProductsIdx] = useState([0,1,2,3,4])
-
     const [order, setOrder] = useState({
         item_name: {},
         item_price: [0,0,0,0,0,0],
@@ -30,7 +32,9 @@ const Confirm = () => {
 
       const [total_num, setDst] = useState(null);
       useEffect(()=>{
-          axios.get("http://localhost:7000/order_query").then((data)=>{
+          axios.post("http://localhost:7000/order_query", {
+            user_uid: user_uid
+        }).then((data)=>{
               const data_ = JSON.parse(JSON.stringify(data.data));
               var total_num = 0;
               data_.forEach(order_ => {
@@ -47,7 +51,9 @@ const Confirm = () => {
 
 
     useEffect(()=>{
-        axios.get("http://localhost:7000/card_query").then((data)=>{
+        axios.post("http://localhost:7000/card_query", {
+            user_uid: user_uid
+        }).then((data)=>{
             const data_ = JSON.parse(JSON.stringify(data.data));
 
             console.log(data_);
@@ -61,7 +67,9 @@ const Confirm = () => {
 
 
     useEffect(()=>{
-        axios.get("http://localhost:7000/address_query").then((data)=>{
+        axios.post("http://localhost:7000/address_query", {
+            user_uid: user_uid
+        }).then((data)=>{
             const data_ = JSON.parse(JSON.stringify(data.data));
             order.shippingInfo.name = data_[0].name
             order.shippingInfo.addressLine1 = data_[0].addressLine1

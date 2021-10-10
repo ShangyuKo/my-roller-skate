@@ -11,12 +11,18 @@ import Home from "./components/Home"
 import Footer from "./components/Footer";
 import Products from "./components/Products";
 import VideoSection from './components/videoSection';
+
+
 // npx json-server --watch data/db.json --port 8000
+
 function App(){
 
+  const user_uid = "853ef64c6554342783"
+
   useEffect(() => {
-    document.title = "MyRollerSkate"
+    document.title = "MyRollerSkate";
   }, []);
+
 
   return(
     <Router>
@@ -26,26 +32,26 @@ function App(){
         </Router>
         <div className="content">
           <Switch>
-            <Route exact path="/my-roller-skate">
+            <Route exact path="/my-roller-skate" >
               <VideoSection/>
             </Route>
             <Route exact path='/purchase'>
-              <Purchase/>
+              <Purchase user_uid={user_uid}/>
             </Route>
             <Route exact path="/payment">
-              <Payment/>
+              <Payment user_uid={user_uid}/>
             </Route>
             <Route exact path="/about">
               <About/>
             </Route>
             <Route exact path="/shipping">
-              <Shipping/>
+              <Shipping user_uid={user_uid}/>
             </Route>
             <Route exact path="/confirm">
-              <Confirm />
+              <Confirm user_uid={user_uid}/>
             </Route>
             <Route exact path="/contactUs">
-              <ContactUs />
+              <ContactUs/>
             </Route>
           </Switch>
         </div>

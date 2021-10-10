@@ -3,7 +3,8 @@ import { useHistory } from "react-router";
 import axios from 'axios';
 import './Payment.css';
 
-const Payment = () => {
+
+const Payment = ({user_uid}) => {
     const [creditCardNumber, setCreditCardNumber] = useState(null);
     const [expireDate, setExpireDate] = useState(null);
     const [ccvCode, setCcvCode] = useState(null);
@@ -12,7 +13,9 @@ const Payment = () => {
 
     const [total_num, setDst] = useState(null);
     useEffect(()=>{
-        axios.get("http://localhost:7000/order_query").then((data)=>{
+        axios.post("http://localhost:7000/order_query", {
+            user_uid: user_uid
+        }).then((data)=>{
             const data_ = JSON.parse(JSON.stringify(data.data));
             var total_num = 0;
             data_.forEach(order => {
@@ -23,6 +26,8 @@ const Payment = () => {
         });
     },[])
 
+    console.log('user_uid: ', user_uid);
+
     const handleSubmit = (e) => {
         axios
         .post("http://localhost:7000/depost_card", {
@@ -30,6 +35,7 @@ const Payment = () => {
             expiration_date: expireDate,
             cvvCode: ccvCode,
             holder_name: cardHolderName,
+            user_uid: user_uid
         })
         // .then((res) => {
         //   alert("success");

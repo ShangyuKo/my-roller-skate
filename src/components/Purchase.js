@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { v4 as uuidv4 } from 'uuid';
 import useFetch from "./useFetch";
 import ItemList from "./ItemList";
 import axios from 'axios';
@@ -6,16 +7,13 @@ import { useHistory } from "react-router";
 import './Purchase.css'
 import { Button } from './Button';
 
-
-const Purchase = () => {
+const Purchase = ({user_uid}) => {
     const [order, setOrder] = useState({
         buyQuantity: [0,0,0,0,0,0]
       });
 
-    // const [onSaleItems,setdata]=useState([]);
+
     const {data:onSale, error, isPending} = useFetch("http://localhost:7000/item_query");
-    // const [res_data, setresponse] = useState('');
-    // const [res_data, setresponse] = useState(null);
     const json_parse = onSale;
     const onSaleItems =  JSON.parse(json_parse);
 
@@ -36,6 +34,8 @@ const Purchase = () => {
         }
     }
 
+    console.log('user_uid: ', user_uid.replace('-', ''));
+
     const purchaseHandler = () =>{
         const array1 = [1,2,3,4,5];
         // array1.forEach( element =>
@@ -43,7 +43,9 @@ const Purchase = () => {
         axios
         .post("http://localhost:7000/depost_order", {
             names: array1,
-            quantity: order.buyQuantity
+            quantity: order.buyQuantity,
+            user_uid: user_uid
+
         }).then((data)=>{
                 const res_data = data.data;
                 
@@ -61,22 +63,6 @@ const Purchase = () => {
             alert("failed", e);
         });
 
-        // console.log('res_data: ',res_data);
-        // if (res_data.length > 0){
-        //     alert(res_data);
-        // }
-        // // else{
-            
-        // }
-        // axios.get("http://localhost:7000/item_query").then((data)=>{
-        //     // console.log('data: ', data);
-        //     const data_ = JSON.stringify(data.data);
-        //     setData(data_);
-        //     setError(null);
-        //     setIsPending(false);
-        // });
-
-        // history.push("/payment");
     }
 
 

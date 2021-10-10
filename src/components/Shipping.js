@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import axios from 'axios';
 
-const Shipping = () => {
+const Shipping = ({user_uid}) => {
     const [name, setName] = useState(null);
     const [addressLine1, setAddressLine1] = useState(null);
     const [addressLine2, setAddressLine2] = useState(null);
@@ -11,10 +11,13 @@ const Shipping = () => {
     const [zip, setZip] = useState(null);
     const history = useHistory()
 
+    console.log('user_uid: ', user_uid);
 
     const [total_num, setDst] = useState(null);
     useEffect(()=>{
-        axios.get("http://localhost:7000/order_query").then((data)=>{
+        axios.post("http://localhost:7000/order_query", {
+            user_uid: user_uid
+        }).then((data)=>{
             const data_ = JSON.parse(JSON.stringify(data.data));
             var total_num = 0;
             data_.forEach(order => {
@@ -28,6 +31,7 @@ const Shipping = () => {
     const handleSubmit = (e) => {
         axios
         .post("http://localhost:7000/depost_address", {
+            user_uid: user_uid,
             name: name,
             address_1: addressLine1,
             address_2: addressLine2,
