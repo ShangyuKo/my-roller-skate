@@ -11,8 +11,7 @@ import Home from "./components/Home"
 import Footer from "./components/Footer";
 import Products from "./components/Products";
 import VideoSection from './components/videoSection';
-// import Login from "./components/signup_page/log_in";
-
+import Login from "./components/signup_page/log_in";
 // npx json-server --watch data/db.json --port 8000
 
 function App(){
@@ -53,6 +52,7 @@ function App(){
             <Route exact path="/contactUs">
               <ContactUs/>
             </Route>
+
           </Switch>
         </div>
         <Router>

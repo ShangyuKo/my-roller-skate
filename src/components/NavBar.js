@@ -5,8 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Redirect } from 'react-router';
 import './Navbar.css';
 import Dropdown from './Dropdown';
-import Login from "./signup/log_in";
-
+import Login from "./signup_page/log_in";
 
 
 function  NavBar(){
@@ -57,7 +56,7 @@ function  NavBar(){
             </Link> */}
 
             <Link to='/my-roller-skate' className='nav-links' onClick={() => {refreshPage('/my-roller-skate')}}>
-            Home
+              Home
             </Link>
           </li>
           <li className='nav-item'
@@ -80,6 +79,10 @@ function  NavBar(){
           </li>
           <li className='nav-item'>
             <Login/>
+            {/* <Link to='/signUp' className='nav-links' onClick={() => {refreshPage('/signUp')}}>
+              Sign Up!
+             
+            </Link> */}
           </li>
         </ul>
       </nav>
