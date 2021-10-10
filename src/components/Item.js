@@ -8,7 +8,7 @@ function Item({item, order, addOneItem, delOneItem}) {
         <div className="items-preview" key={item.Id}>
             <img className="item_picture" src={item.PicLink} alt="item picture" />
             <h2>{item.Item}</h2>
-            <p>Price: {Number(item.Price).toFixed(2)}, Quantity: {quantity[item.Id-1]}
+            <p>Price: {Number(item.Price).toFixed(2)}, Quantity: {quantity[item.Id-1]}, Quantity in Stock: {Number(item.quantity).toFixed(0)}
             <button style={{float: 'right'}} onClick={() => addOneItem(item.Id-1)}>add Item</button>
             <button style={{float: 'right'}} onClick={() => delOneItem(item.Id-1)}>delete Item</button>
             </p>

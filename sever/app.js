@@ -69,11 +69,11 @@ const set_up = [qrop_item, creat_item, qrop_order, creat_order, qrop_card, creat
 set_up.forEach(element => db.query(element));
 
 // INSERT default data
-const item_add1 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Roller Skate', 399.95, 0, 'https://media.dollskill.com/media/1qVrP7p2r7z7HDduWyE9QzFM179S12Lk-34.jpg')"
-const item_add2 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Helmet', 69.95, 0, 'https://cdn.shopify.com/s/files/1/0836/6919/products/green_bike_helmet_001_600x.jpg?v=1611711971')"
-const item_add3 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Pads', 74.95, 0, 'https://www.rei.com/media/8be42fa2-c3a3-4517-85c1-e13dea1213f5?size=784x588')"
-const item_add4 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Wheels', 32.00, 0, 'https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Impala-58mm-82a-Pastel-Lilac-Roller-Skate-Wheels-_341741-front-US.jpg')"
-const item_add5 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Hat', 20.00, 0, 'https://cdn.shopify.com/s/files/1/0066/8945/6243/products/Impala_skate_inline_skates_blades_rollerblades_blue_180x.jpg?v=1584306107')"
+const item_add1 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Roller Skate', 399.95, 10, 'https://media.dollskill.com/media/1qVrP7p2r7z7HDduWyE9QzFM179S12Lk-34.jpg')"
+const item_add2 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Helmet', 69.95, 10, 'https://cdn.shopify.com/s/files/1/0836/6919/products/green_bike_helmet_001_600x.jpg?v=1611711971')"
+const item_add3 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Pads', 74.95, 10, 'https://www.rei.com/media/8be42fa2-c3a3-4517-85c1-e13dea1213f5?size=784x588')"
+const item_add4 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Wheels', 32.00, 10, 'https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Impala-58mm-82a-Pastel-Lilac-Roller-Skate-Wheels-_341741-front-US.jpg')"
+const item_add5 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Hat', 20.00, 8, 'https://cdn.shopify.com/s/files/1/0066/8945/6243/products/Impala_skate_inline_skates_blades_rollerblades_blue_180x.jpg?v=1584306107')"
 
 const set_up2 = [item_add1, item_add2, item_add3, item_add4, item_add5];
 
@@ -99,13 +99,61 @@ app.get("/item_query", function(req, res) {
 });
 
 app.post("/depost_order", function(req, res) {
-  var name = req.body.name;
+  var names = req.body.names;
   var quantity = req.body.quantity;
-  const result = db.query(
-    `UPDATE Item_order SET quantity = ${quantity} WHERE Id = ${name};`
-  );
-  console.log('depost_order: ', result);
-  return res.send(result)
+
+  const id_quantiy = new Map();
+  const new_id_quantiy = new Map();
+  
+  for (var i = 0; i < names.length; i++) {
+      var name = names[i];
+      var num = quantity[i];
+      id_quantiy[name] = num;
+  }
+  
+  const result1 = db.query('select * from Item');
+  const result_json1 = JSON.stringify(result1);
+  const result_json =  JSON.parse(result_json1);
+  // console.log('result_json: ', result_json);
+  // console.log('result_json.length: ', result_json.length);
+
+  // console.log('id_quantiy: ', id_quantiy);
+
+  var flag = true;
+  var response = '';
+  for (var i = 0; i < result_json.length; i++) {
+    var json_e = result_json[i];
+    var id_key = json_e["Id"];
+    // console.log('id_key = ', id_key);
+    // console.log('id_quantiy.has(id_key) ', id_key in id_quantiy);
+
+    if (id_key in id_quantiy) {
+      if (id_quantiy[id_key] > json_e["quantity"]){
+        flag = false
+        response += json_e["Item"] + ' only has = ' + json_e["quantity"].toString() + " in stock" + '\n'
+      }
+      else{
+        new_id_quantiy[json_e["Id"]] = json_e["quantity"] - id_quantiy[id_key];
+      }
+    }
+  }
+  // console.log('new_id_quantiy: ', new_id_quantiy);
+  // console.log('flag: ', flag);
+
+  if (flag == true) {
+    for (const [Id, value] of Object.entries(new_id_quantiy)) {
+        // console.log(key, value);
+        // console.log(Id + " = " + value);
+
+        const result1 = db.query(`UPDATE Item_order SET quantity = ${id_quantiy[Id]} WHERE Id = ${Id};`);
+        console.log('depost_order 1: ', result1);
+        
+        const result2 = db.query(`UPDATE Item SET quantity = ${value} WHERE Id = ${Id};`);
+        console.log('depost_order 2: ', result2);
+    }
+  }
+  
+  return res.send(response)
 });
 
 
