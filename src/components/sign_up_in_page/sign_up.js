@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {Button} from '../Button';
 import ModalDialog from './ModalDialog';
 
-const Login = () => {
+const Signup = () => {
   // declare a new state variable for modal open
   const [open, setOpen] = useState(false);
 
@@ -27,4 +27,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
