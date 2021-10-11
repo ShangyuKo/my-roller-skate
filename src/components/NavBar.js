@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Redirect } from 'react-router';
 import './Navbar.css';
 import Dropdown from './Dropdown';
+import Login from "./signup/log_in";
 
 
 
@@ -78,12 +79,7 @@ function  NavBar(){
             </Link>
           </li>
           <li className='nav-item'>
-            {/* don not have the page for signup yet */}
-            <Link to='/sign-up' className='nav-links'>
-              <Button className='btns' buttonStyle='btn--primary' buttonSize='btn--large'>
-                Sign Up!
-              </Button>
-            </Link>
+            <Login/>
           </li>
         </ul>
       </nav>
@@ -91,32 +87,5 @@ function  NavBar(){
   )
 }
 
-
-
-
-
-
-// const NavBar = () => {
-//     return ( 
-//         <nav className="navbar">
-//             <h1>My Roller Skate</h1>
-//             {/* <div className="links">
-//                 <a href='/'>Home</a>
-//             </div> */}
-//             <div class="wrapper">
-//         <nav>
-//           <div class="logo">LOGO</div>
-//           <ul>
-//             <li><a href="#">Home</a></li>
-//             <li><a href="#">About</a></li>
-//             <li><a href="#">Blog</a></li>
-//             <li><a href="#">Contact</a></li>
-//             <li><a class="active" href="#">Log In</a></li>
-//           </ul>
-//          </nav>
-//        </div>
-//         </nav>
-//     );
-// }
  
 export default NavBar;
