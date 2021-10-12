@@ -33,7 +33,8 @@ npm install react-awesome-reveal --save
 npm i --save-dev @types/react
 npm i --save-dev @types/styled-components
 npm i --save-dev @types/react-router-dom
-npm install @mui/materia
+npm install @mui/material
+npm install @emotion/styled
 ```
 
 - step
