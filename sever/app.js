@@ -21,8 +21,6 @@ app.listen(port, () => {
   console.log(`RUN http://localhost:${port}`);
 });
 
-
-
 // default display
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -70,8 +68,17 @@ const creat_contactUsMessage = "CREATE TABLE ContactUs_Message ( \
                                   Id int NOT NULL AUTO_INCREMENT, \
                                   content varchar(255), \
                                   PRIMARY KEY (Id) )";
+const create_account = "CREATE TABLE account ( \
+                          Id int NOT NULL AUTO_INCREMENT, \
+                          firstName varchar(20), \
+                          lastName varchar(10), \
+                          email varchar(255), \
+                          password varchar(255), \
+                          PRIMARY KEY (Id) )";
+const drop_account = "DROP TABLE IF EXISTS account";
 
-const set_up = [qrop_item, creat_item, qrop_order, creat_order, qrop_card, creat_card, qrop_address, creat_address, qrop_contactUsMessage, creat_contactUsMessage];
+
+const set_up = [qrop_item, creat_item, qrop_order, creat_order, qrop_card, creat_card, qrop_address, creat_address, qrop_contactUsMessage, creat_contactUsMessage, drop_account, create_account];
 
 set_up.forEach(element => db.query(element));
 
@@ -94,7 +101,7 @@ app.get("/item_query", function(req, res) {
     console.log('data: ', result);
     return res.send(result)
 });
-
+console.log("got here 1");/////////////////////////////////
 
 app.post("/depost_order", function(req, res) {
   var names = req.body.names;
@@ -191,4 +198,26 @@ app.get("/contactUsMessage_query", function(req, res) {
   console.log('contactUsMessage_query: ', result);
   return res.send(result)
 });
+
+app.post("/signup", function(req, res) {
+  var firstName = req.body.firstName;
+  console.log(firstName);
+  var lastName = req.body.lastName;
+  var email = req.body.email;
+  var password = req.body.password;
+  const result = db.query(
+    `INSERT INTO account (firstName, lastName, email, password)
+      VALUES ('${firstName},${lastName},${email},${password}');`);
+      // const returnId = db.query('select LAST_INSERT_ID()')
+      console.log('returnId: ', firstName);
+      return res.send(returnId)
+});
+
+app.get("/signup", function(req, res) {
+  const Id = req.body.Id;
+  const result = db.query(`select * from account where Id = ${Id}`)
+  console.log('account_info: ', result);
+  return res.send(result)
+});
+
 
