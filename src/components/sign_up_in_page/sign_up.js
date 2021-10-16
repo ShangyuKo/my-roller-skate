@@ -35,36 +35,44 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // const [hasSubmitId, setHasSubmitId] = useState(false);
+  // const [submitId, setSubmitId] = useState(null);
+  // const [Id, setId] = useState(null);
 
   const submit = (e) => {
     e.preventDefault();
     if (firstName !== null && password !== null ) {//&& confirmPassword !== "" && password === confirmPassword
       axios.post("http://localhost:7000/signup", {
-          firstName: "firstName",
-          lastName: "lastName",
-          email: "email",
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
           password: password,
         })
-
-        .then((response) => {
-          const data_ = JSON.parse(JSON.stringify(response.data));
-          setSubmitId(data_[0]['LAST_INSERT_ID()']);
-          setHasSubmitId(true)
-        }, (error) => {
-          console.log(error);
+        .then((res) => {
+          // console.log("got here");
+          alert("registered successfully!");
+         // props.history.push("/signup");
+        })
+        
+        .catch((e) => {
+          if (e.response.status === 500) {
+            alert("account already exists！");
+          }
         });
+      //   .then((response) => {
+      //     // const data_ = JSON.parse(JSON.stringify(response.data));
+      //     // setSubmitId(data_[0]['LAST_INSERT_ID()']);
+      //     // setHasSubmitId(true)
+      //   }, (error) => {
+      //     console.log(error);
+      //   });
         setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
       };
       
-    //     .then((response) => {
-    //       alert("註冊成功!", id);
-    //       props.history.push("/signup");
-    //     })
-    //     .catch((e) => {
-    //       if (e.response.status === 500) {
-    //         alert("註冊失敗！此帳號已存在，請嘗試新的帳號！");
-    //       }
-    //     });
+        
     // } else if (password === "") {
     //   alert("請輸入帳號!");
     // } else if (password === "") {
@@ -105,7 +113,6 @@ const Signup = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button type="submit">Submit</button>
       <div>
         <Button1 variant="contained" >
           {/* onClick={handleClose} */}
