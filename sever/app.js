@@ -74,7 +74,8 @@ const create_account = "CREATE TABLE account ( \
                           lastName varchar(10), \
                           email varchar(255), \
                           password varchar(255), \
-                          PRIMARY KEY (Id) )";
+                          PRIMARY KEY (Id), \
+                          UNIQUE (email))"; //PRIMARY KEY (email)
 const drop_account = "DROP TABLE IF EXISTS account";
 
 
@@ -101,7 +102,6 @@ app.get("/item_query", function(req, res) {
     console.log('data: ', result);
     return res.send(result)
 });
-console.log("got here 1");/////////////////////////////////
 
 app.post("/depost_order", function(req, res) {
   var names = req.body.names;
@@ -201,23 +201,21 @@ app.get("/contactUsMessage_query", function(req, res) {
 
 app.post("/signup", function(req, res) {
   var firstName = req.body.firstName;
-  console.log(firstName);
   var lastName = req.body.lastName;
   var email = req.body.email;
-  var password = req.body.password;
-  const result = db.query(
-    `INSERT INTO account (firstName, lastName, email, password)
-      VALUES ('${firstName},${lastName},${email},${password}');`);
-      // const returnId = db.query('select LAST_INSERT_ID()')
-      console.log('returnId: ', firstName);
-      return res.send(returnId)
+  var password = req.body.password; 
+  db.query(
+    `INSERT INTO account (firstName, lastName, email, password) 
+      VALUES ('${firstName}', '${lastName}', '${email}', '${password}');
+       ;`);
+      // ON DUPLICATE KEY UPDATE Id = Id
 });
 
-app.get("/signup", function(req, res) {
-  const Id = req.body.Id;
-  const result = db.query(`select * from account where Id = ${Id}`)
-  console.log('account_info: ', result);
-  return res.send(result)
-});
+// app.get("/signup", function(req, res) {
+//   const Id = req.body.Id;
+//   const result = db.query(`select * from account where Id = ${Id}`)
+//   console.log('account_info: ', result);
+//   return res.send(result)
+// });
 
 
