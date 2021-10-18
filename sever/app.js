@@ -205,17 +205,22 @@ app.post("/signup", function(req, res) {
   var email = req.body.email;
   var password = req.body.password; 
   db.query(
-    `INSERT INTO account (firstName, lastName, email, password) 
-      VALUES ('${firstName}', '${lastName}', '${email}', '${password}');
-       ;`);
-      // ON DUPLICATE KEY UPDATE Id = Id
+    ` INSERT INTO account (firstName, lastName, email, password) 
+        VALUES ('${firstName}', '${lastName}', '${email}', '${password}');
+    ;`);
+     
+    //   INSERT INTO account (firstname, lastname, email, password) 
+    // SELECT '${firstName}', '${lastName}', '${email}', '${password}'
+    // WHERE NOT EXISTS 
+    //     (SELECT email
+    //      FROM account 
+    //      WHERE email = '${email}')
 });
-
-// app.get("/signup", function(req, res) {
-//   const Id = req.body.Id;
-//   const result = db.query(`select * from account where Id = ${Id}`)
-//   console.log('account_info: ', result);
-//   return res.send(result)
-// });
+app.get("/signup", function(req, res) {
+  const Id = req.body.Id;
+  const result = db.query(`select * from account where Id = ${Id}`)
+  console.log('signupAccount: ', result);
+  return res.send(result)
+});
 
 
