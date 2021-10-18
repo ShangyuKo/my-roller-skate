@@ -48,24 +48,26 @@ const Signup = () => {
           email: email,
           password: password,
         })
-        .then((res) => {
-          // console.log("got here");
-          alert("registered successfully!");
-         // props.history.push("/signup");
-        })
-        
-        .catch((e) => {
-          if (e.response.status === 500) {
-            alert("account already exists！");
-          }
+        // .then((res) => {
+        //   // if(e.response.status !== 500) {
+           
+        //   // }
+        //   console.log("registred succesfully!");
+        //   alert("registered successfully!");
+        //  // props.history.push("/signup");
+        //   // console.log("got here");
+      
+        // })
+      
+        //  ;
+        .then((response) => {
+          // const data_ = JSON.parse(JSON.stringify(response.data));
+          // setSubmitId(data_[0]['LAST_INSERT_ID()']);
+          // setHasSubmitId(true)
+        }, (error) => {
+          alert("This email is already used");
+          console.log(error);
         });
-      //   .then((response) => {
-      //     // const data_ = JSON.parse(JSON.stringify(response.data));
-      //     // setSubmitId(data_[0]['LAST_INSERT_ID()']);
-      //     // setHasSubmitId(true)
-      //   }, (error) => {
-      //     console.log(error);
-      //   });
         setFirstName("");
         setLastName("");
         setEmail("");
