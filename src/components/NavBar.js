@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Redirect } from 'react-router';
 import './Navbar.css';
 import Dropdown from './Dropdown';
+import Products from './Products/products';
 // import Signup from "./sign_up_in_page/sign_up";
 // import Signin from "./sign_up_in_page/sign_in";
 
@@ -62,7 +63,7 @@ function  NavBar(){
           <li className='nav-item'
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}>
-            <Link to='/purchase' className='nav-links' onClick={() => {refreshPage('/purchase')}}>
+            <Link to='/Products' className='nav-links' onClick={() => {refreshPage('/Products')}}>
              Products<i className='fas fa-caret-down'/>
             </Link>
             {dropdown && <Dropdown/>}

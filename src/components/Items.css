@@ -1,3 +1,6 @@
+/* .button {
+  background-color:#f1356d ;
+} */
 .items-preview {
     padding: 10px 16px;
     margin: 20px 0;
@@ -11,7 +14,15 @@
     color: #f1356d;
     margin-bottom: 8px;
   }
-  .items-preview button {
+  /* .items-preview button {
+    background: #f1356d;
+    color: #fff;
+    border: 0.5;
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+  } */
+  .button {
     background: #f1356d;
     color: #fff;
     border: 0.5;

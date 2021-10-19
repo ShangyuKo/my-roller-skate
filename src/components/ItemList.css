@@ -1,0 +1,5 @@
+.items-list {
+    display: 'flex';
+    justify-content: space-around;
+  }
+  
