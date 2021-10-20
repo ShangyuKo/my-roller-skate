@@ -78,9 +78,15 @@ function  NavBar(){
               Contact Us
             </Link>
           </li>
-          <li className='nav-item'>
+          {/* <li className='nav-item'>
             <Link to='/signup' className='nav-links' onClick={() => {refreshPage('/signup')}}>
               SignUp
+            </Link>
+          </li> */}
+          
+          <li className='nav-item'>
+            <Link to='/signin' className='nav-links' onClick={() => {refreshPage('/signin')}}>
+              SignIn
             </Link>
           </li>
           {/* <li className='nav-item'>

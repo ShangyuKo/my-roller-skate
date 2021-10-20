@@ -11,9 +11,10 @@ import Home from "./components/Home"
 import Footer from "./components/Footer";
 // import Products from "./components/Products";
 import VideoSection from './components/videoSection';
-import Signup from "./components/sign_up_in_page/sign_up"
+import Signup from "./components/sign_up_in_page/sign_up";
 import Products from "./components/Products/products";
 // npx json-server --watch data/db.json --port 8000
+import Signin from "./components/sign_up_in_page/sign_in";
 
 function App(){
 
@@ -58,6 +59,9 @@ function App(){
             </Route>
             <Route exact path="/Products">
               <Products/>
+            </Route>
+            <Route exact path="/signin">
+              <Signin/>
             </Route>
 
           </Switch>

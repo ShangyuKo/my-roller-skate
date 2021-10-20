@@ -217,10 +217,11 @@ app.post("/signup", function(req, res) {
     //      WHERE email = '${email}')
 });
 app.get("/signup", function(req, res) {
-  const Id = req.body.Id;
+  const email = req.body.email;
+  const password = req.body.password;
   const result = db.query(`select * from account where Id = ${Id}`)
   console.log('signupAccount: ', result);
   return res.send(result)
-});
+});//return 0 or 1. 0 means Select did not return anything; 1 mean account exists
 
 

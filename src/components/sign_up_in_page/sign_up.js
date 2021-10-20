@@ -8,6 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import Button1 from '@material-ui/core/Button';
 import {Button} from '../Button';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -83,6 +85,10 @@ const Signup = () => {
     //   alert("兩次密碼輸入不一致!");
     // }
     }
+    function refreshPage(link){ 
+      window.location.href = link
+    }
+
   return (
     <form className={classes.root} onSubmit={submit}>
       <TextField
@@ -123,6 +129,23 @@ const Signup = () => {
         <Button type="submit" variant="contained" color="primary">
           Signup
         </Button>
+        {/* <Grid container>
+          <Grid item>
+            <Link href='/signin' className='nav-links'>
+              {"Already had an account?"}
+            </Link>
+          </Grid>
+        </Grid> */}
+        <Grid container>
+            <Grid item style={{background:'#1976D2'}}>
+              <Link  href='/signin' className='nav-links' onClick={() => {refreshPage('/signin')}}>
+              {/* href="#" variant="body2"  onClick={() => {refreshPage('/signup')}}*/}
+                {"Already have an account? Sign In"}
+              </Link>
+            </Grid>
+        </Grid>
+        
+       
       </div>
     </form>
   );
