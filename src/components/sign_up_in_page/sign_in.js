@@ -2,6 +2,7 @@
 //import Avatar from '@mui/material/Avatar';
 //import Button from '@mui/material/Button';
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import Button from '../Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -36,7 +37,7 @@ export default function Signin() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const history = useHistory();
   const submit = (e) => {
     e.preventDefault();
     if (email !== null && password !== null ) {//&& confirmPassword !== "" && password === confirmPassword
@@ -45,10 +46,14 @@ export default function Signin() {
         password: password,
       })
      
-      .then((response) => {
-      }, (error) => {
+      .then((res) => {
+        //console.log('success!');
+        alert('Logged In successfully!');
+        history.push('/my-roller-skate');
+      })
+      .catch((e) => {
         alert("Password is incorrect OR This email has not been registered");
-        console.log(error);
+        console.log(e);
       });
       setPassword("");
     };

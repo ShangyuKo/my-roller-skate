@@ -10,6 +10,7 @@ import {Button} from '../Button';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,7 +38,7 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const history = useHistory();
   const submit = (e) => {
     e.preventDefault();
     if (firstName !== null && password !== null ) {//&& confirmPassword !== "" && password === confirmPassword
@@ -47,40 +48,22 @@ const Signup = () => {
           email: email,
           password: password,
         })
-        // .then((res) => {
-        //   // if(e.response.status !== 500) {
-           
-        //   // }
-        //   console.log("registred succesfully!");
-        //   alert("registered successfully!");
-        //  // props.history.push("/signup");
-        //   // console.log("got here");
-      
-        // })
-      
-        //  ;
-        .then((response) => {
-          // const data_ = JSON.parse(JSON.stringify(response.data));
-          // setSubmitId(data_[0]['LAST_INSERT_ID()']);
-          // setHasSubmitId(true)
-        }, (error) => {
+       
+        .then((res) => {
+          //console.log('success!');
+          alert('Registered successfully!');
+          history.push('/signin');
+        })
+        .catch((e) => {
           alert("This email is already used");
-          console.log(error);
+          console.log(e);
         });
         setFirstName("");
         setLastName("");
         setEmail("");
         setPassword("");
       };
-      
-        
-    // } else if (password === "") {
-    //   alert("請輸入帳號!");
-    // } else if (password === "") {
-    //   alert("請輸入密碼!");
-    // } else if (password !== confirmPassword) {
-    //   alert("兩次密碼輸入不一致!");
-    // }
+
     }
     function refreshPage(link){ 
       window.location.href = link

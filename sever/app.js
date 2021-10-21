@@ -206,8 +206,14 @@ app.post("/signup", function(req, res) {
   var password = req.body.password; 
   db.query(
     ` INSERT INTO account (firstName, lastName, email, password) 
-        VALUES ('${firstName}', '${lastName}', '${email}', '${password}');
-    ;`);
+        VALUES ('${firstName}', '${lastName}', '${email}', '${password}');`);
+  const emailExist = db.query(
+      `SELECT email
+    FROM account
+    WHERE email = '${email}'AND password = '${password}';`);
+  if(emailExist.length != 0) {
+    return res.send("Login Success!");
+  }
   //console.log("is it printed? ",firstName);
      
     //   INSERT INTO account (firstname, lastname, email, password) 
@@ -224,11 +230,32 @@ app.post("/signin", function(req, res) {
   const emailExist = db.query(
     `SELECT email
   FROM account
-  WHERE email = '${email}'AND password = '${password}' ;`);
+  WHERE email = '${email}'AND password = '${password}';`);
+
+
+  // db.query(
+  //   `SELECT * FROM account WHERE username='${username}'`,
+  //   function(err, rows, fields) {
+  //     // 檢查帳號是否存在
+  //     if (rows.length === 0) {
+  //       return res.status(500).send('Login Failed!');
+  //     };
+  //     // 若帳號存在就進行密碼比較
+  //     const psRes = bcrypt.compareSync(req.body.password, rows[0].password);
+  //     if (!psRes) {
+  //       res.status(500).send("Password Wrong!");
+  //     }
+  //     return res.send("Login Success!");
+  //   }
+  // );
+
   console.log("body", emailExist.length);
   //if(emailExist.length == 1)alert('logged in');
   if(emailExist.length == 0) {
     alert('Password is wrong or email is not registered');
+  }
+  else{
+    return res.send("Login Success!");
   }
 
   });
