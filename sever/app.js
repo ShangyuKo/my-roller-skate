@@ -208,6 +208,7 @@ app.post("/signup", function(req, res) {
     ` INSERT INTO account (firstName, lastName, email, password) 
         VALUES ('${firstName}', '${lastName}', '${email}', '${password}');
     ;`);
+  //console.log("is it printed? ",firstName);
      
     //   INSERT INTO account (firstname, lastname, email, password) 
     // SELECT '${firstName}', '${lastName}', '${email}', '${password}'
@@ -216,12 +217,18 @@ app.post("/signup", function(req, res) {
     //      FROM account 
     //      WHERE email = '${email}')
 });
-app.get("/signup", function(req, res) {
-  const email = req.body.email;
-  const password = req.body.password;
-  const result = db.query(`select * from account where Id = ${Id}`)
-  console.log('signupAccount: ', result);
-  return res.send(result)
-});//return 0 or 1. 0 means Select did not return anything; 1 mean account exists
 
+app.post("/signin", function(req, res) {
+  var email = req.body.email;
+  var password = req.body.password; 
+  const emailExist = db.query(
+    `SELECT email
+  FROM account
+  WHERE email = '${email}'AND password = '${password}' ;`);
+  console.log("body", emailExist.length);
+  //if(emailExist.length == 1)alert('logged in');
+  if(emailExist.length == 0) {
+    alert('Password is wrong or email is not registered');
+  }
 
+  });

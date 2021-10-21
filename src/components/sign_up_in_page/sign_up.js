@@ -37,9 +37,6 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [hasSubmitId, setHasSubmitId] = useState(false);
-  // const [submitId, setSubmitId] = useState(null);
-  // const [Id, setId] = useState(null);
 
   const submit = (e) => {
     e.preventDefault();
@@ -95,6 +92,7 @@ const Signup = () => {
         label="First Name"
         variant="filled"
         required
+        fullWidth
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
       />
@@ -102,6 +100,7 @@ const Signup = () => {
         label="Last Name"
         variant="filled"
         required
+        fullWidth
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
       />
@@ -110,6 +109,7 @@ const Signup = () => {
         variant="filled"
         type="email"
         required
+        fullWidth
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
@@ -118,6 +118,7 @@ const Signup = () => {
         variant="filled"
         type="password"
         required
+        fullWidth
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
