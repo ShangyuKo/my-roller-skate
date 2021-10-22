@@ -15,13 +15,15 @@ import Signup from "./components/sign_up_in_page/sign_up";
 import Products from "./components/Products/products";
 // npx json-server --watch data/db.json --port 8000
 import Signin from "./components/sign_up_in_page/sign_in";
+import useSessionStorage from "./components/useSessionStorage";
 
 function App(){
 
-  const [user_uid, set_user_uid] = useState("853ef64c6554342783");
+  const [uid, set_uid] = useSessionStorage('uid', -1);
 
   useEffect(() => {
     document.title = "MyRollerSkate";
+    console.log("uid = " + uid);
   }, []);
 
 
@@ -29,7 +31,7 @@ function App(){
     <Router>
       <div className="App">
         <Router>
-          <NavBar />
+          <NavBar uid={uid} set_uid={set_uid}/>
         </Router>
         <div className="content">
           <Switch>
@@ -37,19 +39,19 @@ function App(){
               <VideoSection/>
             </Route>
             <Route exact path='/purchase'>
-              <Purchase user_uid={user_uid}/>
+              <Purchase user_uid={uid}/>
             </Route>
             <Route exact path="/payment">
-              <Payment user_uid={user_uid}/>
+              <Payment user_uid={uid}/>
             </Route>
             <Route exact path="/about">
               <About/>
             </Route>
             <Route exact path="/shipping">
-              <Shipping user_uid={user_uid}/>
+              <Shipping user_uid={uid}/>
             </Route>
             <Route exact path="/confirm">
-              <Confirm user_uid={user_uid}/>
+              <Confirm user_uid={uid}/>
             </Route>
             <Route exact path="/contactUs">
               <ContactUs/>
@@ -61,7 +63,7 @@ function App(){
               <Products/>
             </Route>
             <Route exact path="/signin">
-              <Signin/>
+              <Signin uid={uid} set_uid={set_uid}/>
             </Route>
 
           </Switch>

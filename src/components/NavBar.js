@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from './Button';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
@@ -9,14 +9,19 @@ import Products from './Products/products';
 // import Signup from "./sign_up_in_page/sign_up";
 // import Signin from "./sign_up_in_page/sign_in";
 
-function  NavBar(){
+function  NavBar({uid, set_uid}){
   // const history = useHistory();
   const [click, setClick] = useState(false);
   const [dropdown,setDropDown] = useState(false);
   const handleClick = () => setClick(!click);
   const history = useHistory();
   const closeMobileMenu = () => setClick(false);
- 
+
+  const signOutHandler = () =>{
+    set_uid(-1);
+    history.push('/my-roller-skate');
+  }
+
   const onMouseEnter = () =>{
     if(window.innerWidth < 960){
       setDropDown(false)
@@ -39,7 +44,7 @@ function  NavBar(){
   function both(link){
     refreshPage(link);
     setClick(false)
-}
+  }
   
   return (
     <>
@@ -83,12 +88,18 @@ function  NavBar(){
               SignUp
             </Link>
           </li> */}
-          
-          <li className='nav-item'>
-            <Link to='/signin' className='nav-links' onClick={() => {refreshPage('/signin')}}>
-              SignIn
-            </Link>
-          </li>
+          { (uid == -1)?
+            <li className='nav-item'>
+              <Link to='/signin' className='nav-links' onClick={() => {refreshPage('/signin')}}>
+                SignIn
+              </Link>
+            </li>:
+            <li className='nav-item'>
+              <Link to='/my-roller-skate' className='nav-links' onClick={() => signOutHandler()}>
+                SignOut
+              </Link>
+            </li>
+          }
           {/* <li className='nav-item'>
             <Signin/>
           </li> */}

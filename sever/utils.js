@@ -28,7 +28,7 @@ function check_quantity(names, quantity) {
       var id_key = json_e["Id"];
   
       if (id_key in order_id_quantiy) {
-        tem_num += 1;
+        item_num += 1;
         if (order_id_quantiy[id_key] > json_e["quantity"]){
           flag = false
           response += json_e["Item"] + ' only has = ' + json_e["quantity"].toString() + " in stock" + '\n'

@@ -226,12 +226,8 @@ app.post("/signup", function(req, res) {
 
 app.post("/signin", function(req, res) {
   var email = req.body.email;
-  var password = req.body.password; 
-  const emailExist = db.query(
-    `SELECT email
-  FROM account
-  WHERE email = '${email}'AND password = '${password}';`);
-
+  var password = req.body.password;
+  const signInId = db.query(`SELECT Id FROM account WHERE email = '${email}' AND password = '${password}';`);
 
   // db.query(
   //   `SELECT * FROM account WHERE username='${username}'`,
@@ -249,13 +245,14 @@ app.post("/signin", function(req, res) {
   //   }
   // );
 
-  console.log("body", emailExist.length);
+  console.log("body", signInId.length);
+  console.log('signInId: ', signInId);
   //if(emailExist.length == 1)alert('logged in');
-  if(emailExist.length == 0) {
-    alert('Password is wrong or email is not registered');
+  if(signInId.length == 0) {
+    console.log('Password is wrong or email is not registered');
   }
   else{
-    return res.send("Login Success!");
+    res.send(signInId);
   }
 
   });

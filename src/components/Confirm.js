@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import axios from 'axios';
-import useFetch from "./useFetch";
+// import useFetch from "./useFetch";
 
 const Confirm = ({user_uid}) => {
 

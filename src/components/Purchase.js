@@ -34,7 +34,7 @@ const Purchase = ({user_uid}) => {
         }
     }
 
-    console.log('user_uid: ', user_uid.replace('-', ''));
+    // console.log('user_uid: ', user_uid.replace('-', ''));
 
     const purchaseHandler = () =>{
         const array1 = [1,2,3,4,5];

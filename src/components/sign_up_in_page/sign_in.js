@@ -33,7 +33,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Signin() {
+export default function Signin({uid, set_uid}) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,14 +41,15 @@ export default function Signin() {
   const submit = (e) => {
     e.preventDefault();
     if (email !== null && password !== null ) {//&& confirmPassword !== "" && password === confirmPassword
-      axios.post("http://localhost:7000/signin", {
+      axios.post('http://localhost:7000/signin',{
         email: email,
         password: password,
       })
-     
       .then((res) => {
-        //console.log('success!');
+        const data_ = JSON.parse(JSON.stringify(res.data));
+        console.log(data_);
         alert('Logged In successfully!');
+        set_uid(data_[0]['Id']);
         history.push('/my-roller-skate');
       })
       .catch((e) => {
