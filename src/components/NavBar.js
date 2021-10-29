@@ -68,7 +68,7 @@ function  NavBar({uid, set_uid}){
           <li className='nav-item'
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}>
-            <Link to='/Products' className='nav-links' onClick={() => {refreshPage('/Products')}}>
+            <Link to='/purchase' className='nav-links' onClick={() => {refreshPage('/purchase')}}>
              Products<i className='fas fa-caret-down'/>
             </Link>
             {dropdown && <Dropdown/>}

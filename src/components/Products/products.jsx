@@ -5,7 +5,7 @@ import axios from 'axios';
 import useFetch from "../useFetch";
 import ItemList from "../ItemList";
 import { v4 as uuidv4 } from 'uuid';
-
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
 // const products = [
@@ -73,6 +73,9 @@ const Products = () => {
         });
 
     }
+    function refreshPage(link){ 
+        window.location.href = link
+      }
 
     return(
         <div>
@@ -103,6 +106,7 @@ const Products = () => {
                         delOneItem={delOneItem} 
                         title="All Products"/>
             }
+            <button className='btn' onClick={() => purchaseHandler()}>Purchase</button>
         </div>
     )
    

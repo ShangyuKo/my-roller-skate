@@ -1,7 +1,8 @@
 import Item from './Item'
 import Grid from "@material-ui/core/Grid";
-import Product from './Products/Product/product';
+//import Product from './Products/Product/product';
 import './ItemList.css'
+import useStyles from '../components/Products/Product/styles';
 
 // const items = [
 //   {Id:1, Item:"pad", Price:300, quantity:10, picLink: "https://media.dollskill.com/media/1qVrP7p2r7z7HDduWyE9QzFM179S12Lk-34.jpg"},
@@ -12,13 +13,14 @@ import './ItemList.css'
 // ];
 
 const ItemList = ({ items, order, addOneItem, delOneItem }) => {
+  const classes = useStyles();
     return (
       <div >
-        {/* className="items-list" */}
-        {/* {console.log(ItemList)} */}
-        {items.map(product => (
-          <Grid container>
-            <Grid item key={product.Id} xs={12} sm={6} lg={3}>
+        <Grid container spacing={2}>
+          {items.map(product => (
+          
+            <Grid item xs={3} >
+{/*key={product.Id}  */}
                {/* product */}
               {/* <Product product={product}/> */}
               <Item item={product} order={order} addOneItem={addOneItem} delOneItem={delOneItem}/>
@@ -26,13 +28,8 @@ const ItemList = ({ items, order, addOneItem, delOneItem }) => {
 
            {/* <Product product={product}/> */}
             </Grid>
-          </Grid>
-           
-
-          // <div className="item-preview" key={item.Id} >
-          //     <Item item={item} order={order} addOneItem={addOneItem} delOneItem={delOneItem}/>
-          // </div>
-        ))}
+          ))}
+        </Grid>
       </div>
     );
 }

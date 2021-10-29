@@ -9,14 +9,14 @@ function Item({item, order, addOneItem, delOneItem}) {
     const classes = useStyles();
 
     return(
-        <Card className={classes.root}>
+        <Card className={classes.root} key={item.Id} >
             <CardMedia className={classes.media} image={item.PicLink}></CardMedia>
             <CardContent>
                 <div className={classes.cardContent}>
-                    <Typography variant="h5" gutterBottom>
+                    <Typography variant="h6" gutterBottom>
                         {item.Item}
                     </Typography>
-                    <Typography variant="h5">
+                    <Typography variant="h6">
                         Price: {Number(item.Price).toFixed(2)},
                     </Typography>
                 </div>
