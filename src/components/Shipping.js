@@ -99,7 +99,7 @@ const Shipping = ({user_uid}) => {
                 />
                 <button onClick={() => {history.goBack()}}>Back</button>
                 &nbsp;&nbsp;&nbsp;
-                <button>Check</button>
+                <button>Check out</button>
             </form>
         </div>
     );

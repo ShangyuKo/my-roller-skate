@@ -81,7 +81,7 @@ const Purchase = ({user_uid}) => {
             {/* <Button className='btns' buttonStyle='btn--outline' buttonSize='btn--large' onClick={() => purchaseHandler()}>
                 Purchase
             </Button> */}
-            <button className='btn' onClick={() => purchaseHandler()}>Purchase</button>
+            <button className='btn' onClick={() => purchaseHandler()}>Proceed to checkout</button>
         </div>
     );
 }

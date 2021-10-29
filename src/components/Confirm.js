@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import axios from 'axios';
+import Grid from "@material-ui/core/Grid";
+import Box from '@mui/material/Box';
+import { borderRadius } from "@mui/system";
+import Button from './Button';
 // import useFetch from "./useFetch";
 
 const Confirm = ({user_uid}) => {
@@ -85,37 +89,98 @@ const Confirm = ({user_uid}) => {
 
 
     return (
-        <div>
-            <h1>This is your order, {order.shippingInfo.name}</h1>
+        <div className="confirm">
+            <h1>Order Information for , {order.shippingInfo.name}</h1>
+            {/* <br/> */}
             <br/>
-            <br/>
-            <h2>Your Products</h2>
-            { (
+            
+            <Box margin="10px" sx={{ p: 2, border: '4px solid', borderColor: '#c41581' , borderRadius: 5}}>
+            <h2 >Your Products</h2>
+                <Grid container spacing={4}  >
+                    <Grid item xs={4}>
+                        ITEM: 
+                    </Grid>
+                    <Grid item xs={4}>
+                       QUANTITY: 
+                    </Grid>
+                    <Grid item xs={4}>
+                       SUBTOTAL:
+                    </Grid>
+                </Grid>
+                { (
                     productsIdx.map(productIdx => (
-                        <h3>
-                            <div style={{textAlign:'left'}}>
-                                {order.item_name[productIdx]}: {order.buyQuantity[productIdx]}
-                            </div>
-                            <div style={{textAlign:'right'}}>
+                        <Grid container spacing={2} >
+                            <Grid item xs={4}>
+                                {/* style={{textAlign:'left'}} */}
+                                {order.item_name[productIdx]}: 
+                            </Grid>
+
+                            <Grid item xs={4}>
+                                {/* style={{textAlign:'left'}} */}
+                                {order.buyQuantity[productIdx]}
+                            </Grid>
+
+                            <Grid item xs={4}>
+                                {/* style={{textAlign:'right'}} */}
                                 {(order.item_price[productIdx]*order.buyQuantity[productIdx]).toFixed(2)}
-                            </div>
-                        </h3>
-                    ))
-                )
-            }
-            <div style={{"textAlign":'right'}}><h3>Total price: {order.totalPrice}</h3></div>
-            {/* <h3 style="float:right;">Total price: {order.totalPrice}</h3> */}
+                            </Grid>
+                        </Grid>
+                            ))
+                        )
+                    }
+                <div ><h3 margin="20px 0px">Total price: {order.totalPrice}</h3></div>
+            </Box>
             <br/>
             <h2>Card Information</h2>
-            <h3>Card Number: {order.paymentInfo.creditCardNumber}</h3>
-            <br/>
-            <h2>Shipment Information</h2>
-            <h3>Name: {order.shippingInfo.name}</h3>
-            <h3>Address Line 1: {order.shippingInfo.addressLine1}</h3>
-            <h3>Address Line 2: {order.shippingInfo.addressLine2}</h3>
-            <h3>City: {order.shippingInfo.city}, State: {order.shippingInfo.state}, Zip: {order.shippingInfo.zip}</h3>
-            <br/>
-            <button onClick={() => {history.goBack()}}>Back</button>
+            <Box margin="10px auto" >
+                
+                <Grid item>
+                    <h3>Card Number: {order.paymentInfo.creditCardNumber}</h3>
+                    <br/>
+                </Grid>
+            
+                <br/>
+            </Box>
+            <Box margin="10px auto" sx={{width: 450, height: 200, border: '4px solid', borderColor: '#c41581' , borderRadius: 5}}>
+                <h2>Shipment Information</h2>
+                <Grid container spacing={5}>
+                    <Grid item >
+                        <h3>Name:</h3>
+                    </Grid>
+                    <Grid item>
+                        <h3>{order.shippingInfo.name}</h3>
+                    </Grid>
+                    
+                </Grid>
+                <Grid container spacing={2}>
+                    <Grid item >
+                        <h3>Address Line 1:</h3>
+                    </Grid>
+                    <Grid item>
+                        <h3>{order.shippingInfo.addressLine1}</h3>
+                    </Grid>
+                    <Grid item >
+                        <h3>Address Line 2:</h3>
+                    </Grid>
+                    <Grid item>
+                        <h3>{order.shippingInfo.addressLine2}</h3>
+                    </Grid>
+                    <Grid item>
+                        <h3>City: {order.shippingInfo.city}, State: {order.shippingInfo.state}, Zip: {order.shippingInfo.zip}</h3>
+                    </Grid>
+                    
+                    <br/>
+                </Grid>
+            </Box>
+            <Button
+            onClick={() => {history.goBack()}}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Back
+            </Button>
+            
         </div>
     );
 }
