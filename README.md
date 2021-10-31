@@ -53,11 +53,11 @@ Third:(type in the command below into the just opened new terminal)
 - shipping api step
 ```
 First:
-cd sever_ship
-node app_order.js
+  cd sever_ship
+  node app_order.js
 Then: 
-open a new commander
+  open a new commander
 Third:
-cd sever_ship
-node app_processing.js
+  cd sever_ship
+  node app_processing.js
 ```
