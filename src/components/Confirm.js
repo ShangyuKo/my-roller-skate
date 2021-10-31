@@ -80,8 +80,13 @@ const Confirm = ({user_uid}) => {
     },[])
 
     const purchaseHandler = () =>{
-        axios.post("http://localhost:8000/order_submit", order).then((data)=>{
+        axios.post("http://localhost:8000/order_submit", order)
+        .then((data)=>{
             console.log('data: ', data);
+        })
+        .catch((e) => {
+            console.log(e);
+            alert("failed", e);
         });
         history.goBack();
     }

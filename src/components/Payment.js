@@ -29,18 +29,27 @@ const Payment = ({user_uid}) => {
     console.log('user_uid: ', user_uid);
 
     const handleSubmit = (e) => {
-        axios
-        .post("http://localhost:7000/depost_card", {
+        axios.post("http://localhost:7000/depost_card", {
             card_number: creditCardNumber,
             expiration_date: expireDate,
             cvvCode: ccvCode,
             holder_name: cardHolderName,
             user_uid: user_uid
         })
-        // .then((res) => {
-        //   alert("success");
-        // //   props.history.push("/signin");
-        // })
+        .catch((e) => {
+          console.log(e);
+          alert("failed", e);
+        });
+
+        axios.post("http://localhost:7001/payment_process", {
+            card_number: creditCardNumber,
+            expiration_date: expireDate,
+            cvvCode: ccvCode,
+            holder_name: cardHolderName
+        })
+        .then((data)=>{
+            console.log('data: ', data);
+        })
         .catch((e) => {
           console.log(e);
           alert("failed", e);
