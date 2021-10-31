@@ -135,8 +135,8 @@ app.post("/depost_order", function(req, res) {
 });
 
 
-app.post("/order_query", function(req, res) {
-    var user_uid = req.body.user_uid;
+app.get("/order_query", function(req, res) {
+    var user_uid = req.query.user_uid;
     const result = db.query(`select * from Item_order  WHERE customerId = '${user_uid}';`)
     console.log('order_query: ', result);
     return res.send(result)
@@ -154,8 +154,8 @@ app.post("/depost_card", function(req, res) {
     return res.send(result)
     });
 
-app.post("/card_query", function(req, res) {
-    var user_uid = req.body.user_uid;
+app.get("/card_query", function(req, res) {
+    var user_uid = req.query.user_uid;
     const result = db.query(`select * from Card  WHERE customerId = '${user_uid}';`)
     console.log('card_query: ', result);
     return res.send(result)
@@ -175,8 +175,8 @@ app.post("/depost_address", function(req, res) {
     return res.send(result)
 });
 
-app.post("/address_query", function(req, res) {
-    var user_uid = req.body.user_uid;
+app.get("/address_query", function(req, res) {
+    var user_uid = req.query.user_uid;
     const result = db.query(`select * from Address  WHERE customerId = '${user_uid}';`)
     console.log('address_query: ', result);
     return res.send(result)

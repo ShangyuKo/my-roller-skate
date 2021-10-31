@@ -34,10 +34,10 @@ const Confirm = ({user_uid}) => {
         }
       });
 
-      const [total_num, setDst] = useState(null);
       useEffect(()=>{
-          axios.post("http://localhost:7000/order_query", {
-            user_uid: user_uid
+        //   query the order info
+        axios.get("http://localhost:7000/order_query", {
+            params: {user_uid: user_uid}
         }).then((data)=>{
               const data_ = JSON.parse(JSON.stringify(data.data));
               var total_num = 0;
@@ -51,13 +51,9 @@ const Confirm = ({user_uid}) => {
   
               setOrder({...order});
           });
-
-      },[])
-
-
-    useEffect(()=>{
-        axios.post("http://localhost:7000/card_query", {
-            user_uid: user_uid
+        //   query the card info
+        axios.get("http://localhost:7000/card_query", {
+            params: {user_uid: user_uid}
         }).then((data)=>{
             const data_ = JSON.parse(JSON.stringify(data.data));
 
@@ -68,12 +64,9 @@ const Confirm = ({user_uid}) => {
             order.paymentInfo.cardHolderName = data_[0].holder_name;
             setOrder({...order});
         });
-    },[])
-
-
-    useEffect(()=>{
-        axios.post("http://localhost:7000/address_query", {
-            user_uid: user_uid
+        // query the address info
+        axios.get("http://localhost:7000/address_query", {
+            params: {user_uid: user_uid}
         }).then((data)=>{
             const data_ = JSON.parse(JSON.stringify(data.data));
             order.shippingInfo.name = data_[0].name
@@ -177,6 +170,7 @@ const Confirm = ({user_uid}) => {
                     <br/>
                 </Grid>
             </Box>
+            
             <Button
             onClick={() => purchaseHandler()}
               fullWidth

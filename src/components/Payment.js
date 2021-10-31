@@ -13,8 +13,8 @@ const Payment = ({user_uid}) => {
 
     const [total_num, setDst] = useState(null);
     useEffect(()=>{
-        axios.post("http://localhost:7000/order_query", {
-            user_uid: user_uid
+        axios.get("http://localhost:7000/order_query", {
+            params: {user_uid: user_uid}
         }).then((data)=>{
             const data_ = JSON.parse(JSON.stringify(data.data));
             var total_num = 0;
