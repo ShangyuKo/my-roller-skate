@@ -50,3 +50,14 @@ Third:(type in the command below into the just opened new terminal)
   cd src
   npm start
 ```
+- shipping api step
+```
+First:
+cd sever_ship
+node app_order.js
+Then: 
+open a new commander
+Third:
+cd sever_ship
+node app_processing.js
+```
