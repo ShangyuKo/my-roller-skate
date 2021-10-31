@@ -51,6 +51,7 @@ const Confirm = ({user_uid}) => {
   
               setOrder({...order});
           });
+
       },[])
 
 
@@ -85,8 +86,12 @@ const Confirm = ({user_uid}) => {
         });
     },[])
 
-
-
+    const purchaseHandler = () =>{
+        axios.post("http://localhost:8000/order_submit", order).then((data)=>{
+            console.log('data: ', data);
+        });
+        history.goBack();
+    }
 
     return (
         <div className="confirm">
@@ -173,14 +178,14 @@ const Confirm = ({user_uid}) => {
                 </Grid>
             </Box>
             <Button
-            onClick={() => {history.goBack()}}
+            onClick={() => purchaseHandler()}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Back
+              Checkout Order
             </Button>
-            
+            {/* <Button className='btn' onClick={() => purchaseHandler()}>Checkout Order</Button> */}
         </div>
     );
 }
