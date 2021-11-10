@@ -53,7 +53,15 @@ cd server
 node app.js
 ```
 
-### Step 3. Open the 2nd and 3rd CMD to Run async Shipping APIs
+### Step 3. Open the 2st CMD to Run bt_depost_order api
+
+```bash
+cd server
+node app_bt.js
+```
+
+
+### Step 4. Open the 3nd and 4rd CMD to Run async Shipping APIs
 
 ```bash
 cd server_ship
@@ -65,7 +73,7 @@ cd server_ship
 node app_processing.js
 ```
 
-### Step 4. Open the 4th CMD to Run React Application
+### Step 5. Open the 5th CMD to Run React Application
 
 ```bash
 npm start
