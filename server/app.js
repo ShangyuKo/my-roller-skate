@@ -13,6 +13,7 @@ const corsOptions ={
     optionSuccessStatus:200
 }
 
+
 app.use(cors(corsOptions));
 
 // set access port
@@ -103,42 +104,63 @@ app.get("/item_query", function(req, res) {
     return res.send(result)
 });
 
+var order_wait_name = [];
+var order_wait_quantity = [];
+
 app.post("/depost_order", function(req, res) {
   var names = req.body.names;
   var quantity = req.body.quantity;
   var user_uid = req.body.user_uid;
 
-  const [flag, order_id_quantiy, n_id_quantiy, response] = utils.check_quantity(names, quantity);
+  order_wait_name.push(names);
+  order_wait_quantity.push(quantity);
+
   const uid_exist_flag = utils.check_uid(user_uid);
+  if (uid_exist_flag == false){
+    utils.set_up_user_order_table(user_uid);
+  }
+  exist_user_order = utils.check_user_order(user_uid);
 
-  if (flag == true) {
+  names.forEach((id_, index) => {
+    const quan = quantity[index];
+    var update_oder = quan + exist_user_order[id_];
+    const result1 = db.query(`UPDATE Item_order SET quantity = ${update_oder} WHERE Id = ${id_} AND customerId = '${user_uid}';`);
+    // console.log('depost_order 1: ', result1);
+  });
 
-    if (uid_exist_flag == false){
-      utils.set_up_user_order_table(user_uid);
-    }
+  console.log('order_wait_name ', order_wait_name);
+  console.log('order_wait_quantity: ', order_wait_quantity);
+  return res.send('')
 
-    exist_user_order = utils.check_user_order(user_uid);
+});
+
+app.get("/bt_depost_order", function(req, res) {
+
+  order_wait_name.forEach((names, index) => {
+    const quantity = order_wait_quantity[index];
+
+    const [n_id_quantiy] = utils.check_quantity_nocare(names, quantity);
 
     for (const [Id, value] of Object.entries(n_id_quantiy)) {
-
-        var update_oder = order_id_quantiy[Id] + exist_user_order[Id];
-        const result1 = db.query(`UPDATE Item_order SET quantity = ${update_oder} WHERE Id = ${Id} AND customerId = '${user_uid}';`);
-        console.log('depost_order 1: ', result1);
-        
         const result2 = db.query(`UPDATE Item SET quantity = ${value} WHERE Id = ${Id};`);
         console.log('depost_order 2: ', result2);
     }
-  }
   
-  return res.send(response)
+  });
 
+  order_wait_name = [];
+  order_wait_quantity = [];
+  console.log('order_wait_name ', order_wait_name);
+  console.log('order_wait_quantity: ', order_wait_quantity);
+
+  return res.send('suscess')
 });
 
 
 app.get("/order_query", function(req, res) {
     var user_uid = req.query.user_uid;
     const result = db.query(`select * from Item_order  WHERE customerId = '${user_uid}';`)
-    console.log('order_query: ', result);
+    // console.log('order_query: ', result);
     return res.send(result)
 });
 

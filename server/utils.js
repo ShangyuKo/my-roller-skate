@@ -48,6 +48,37 @@ function check_quantity(names, quantity) {
   
     return [flag, order_id_quantiy, n_id_quantiy, response];
   }
+
+
+  function check_quantity_nocare(names, quantity) {
+
+    const order_id_quantiy = new Map();
+    
+    for (var i = 0; i < names.length; i++) {
+      var name = names[i];
+      var num = quantity[i];
+      order_id_quantiy[name] = num;
+    }
+  
+    const result_json =  JSON.parse(JSON.stringify(db.query('select * from Item')));
+  
+    var item_num = 0;
+    const n_id_quantiy = new Map();
+  
+    for (var i = 0; i < result_json.length; i++) {
+      var json_e = result_json[i];
+      var id_key = json_e["Id"];
+  
+      if (id_key in order_id_quantiy) {
+        item_num += 1;
+        n_id_quantiy[json_e["Id"]] = json_e["quantity"] - order_id_quantiy[id_key];
+      }
+    }
+
+    console.log('order_id_quantiy : ', order_id_quantiy);
+  
+    return [n_id_quantiy];
+  }
   
 function set_up_user_order_table(user_uid) {
     const order_add1 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Roller Skate', '${user_uid}', 399.95, 0);`
@@ -96,4 +127,39 @@ function check_user_order(user_uid) {
   }
   
 
-module.exports = { check_quantity, set_up_user_order_table, check_uid, check_user_order};
+  
+// app.post("/depost_order_pre", function(req, res) {
+//   var names = req.body.names;
+//   var quantity = req.body.quantity;
+//   var user_uid = req.body.user_uid;
+
+//   const [flag, order_id_quantiy, n_id_quantiy, response] = utils.check_quantity(names, quantity);
+//   const uid_exist_flag = utils.check_uid(user_uid);
+
+//   if (flag == true) {
+
+//     if (uid_exist_flag == false){
+//       utils.set_up_user_order_table(user_uid);
+//     }
+
+//     exist_user_order = utils.check_user_order(user_uid);
+
+//     for (const [Id, value] of Object.entries(n_id_quantiy)) {
+
+//         var update_oder = order_id_quantiy[Id] + exist_user_order[Id];
+//         const result1 = db.query(`UPDATE Item_order SET quantity = ${update_oder} WHERE Id = ${Id} AND customerId = '${user_uid}';`);
+//         console.log('depost_order 1: ', result1);
+        
+//         const result2 = db.query(`UPDATE Item SET quantity = ${value} WHERE Id = ${Id};`);
+//         console.log('depost_order 2: ', result2);
+//     }
+//   }
+  
+//   return res.send(response)
+
+// });
+
+
+module.exports = { check_quantity, set_up_user_order_table, check_uid, check_user_order, check_quantity_nocare};
+
+
