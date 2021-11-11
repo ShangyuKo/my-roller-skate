@@ -6,6 +6,63 @@ const port = 7000;
 
 const cors = require('cors');
 
+function check_products_quantity_in_stock(request_product_idxs, request_product_quantities){
+  const result_json =  JSON.parse(JSON.stringify(db.query('select Id, Quantity from Item')));
+
+  // build a map for products in stock
+  //    key:    Product idx('Id')
+  //    value:  on stock quantity('Quantity')
+  const products_quantity_in_stock = new Map();
+  for(let i = 0; i < result_json.length; i++){
+    products_quantity_in_stock[parseInt(result_json[i]['Id'])] = result_json[i]['Quantity'];
+  }
+
+  // console.log(products_quantity_in_stock);
+  let request_status = true;
+  let log = '';
+  for(let i = 0; i < request_product_idxs.length; i++){
+    const request_product_idx = request_product_idxs[i];
+    const request_product_quantity = request_product_quantities[i];
+
+    if(request_product_idx in products_quantity_in_stock){
+      
+      
+      if(products_quantity_in_stock[request_product_idx] < request_product_quantity){
+        request_status = false;
+        log += 'product ' + request_product_idx + ' is requested ' + request_product_quantity + ' but only ' + products_quantity_in_stock[request_product_idx] + ' on stock.\n';
+      }
+
+    }
+  }
+  console.log(log);
+  return [request_status, log];
+}
+
+function get_next_orderId(){
+  // get new orderId by select the max(orderId) and increment 1.
+  const result_json =  JSON.parse(JSON.stringify(db.query("select MAX(orderId) AS 'Maximum Value' from Item_order")));
+
+  let next_orderId = 0;
+  if(result_json[0]['Maximum Value'] != null){
+    next_orderId = result_json[0]['Maximum Value'] + 1;
+  }
+  return next_orderId;
+}
+
+function insert_orders(request_product_idxs, request_product_quantities, user_uid, orderId){
+  for(let i = 0; i < request_product_idxs.length; i++){
+    const request_product_idx = request_product_idxs[i];
+    let result_json = JSON.parse(JSON.stringify(db.query(`select Item, Price from Item where Id = '${request_product_idx}';`)));
+    const product_name = result_json[0]['Item'];
+    const product_price = result_json[0]['Price'];
+    const product_quantity = request_product_quantities[i];
+    
+    result_json = JSON.parse(JSON.stringify(db.query(`select Item from Item_order where OrderId = ${orderId} and ItemId = ${request_product_idx};`)));
+    // console.log(result_json);
+    db.query(`INSERT INTO Item_order (UserId, OrderId, ItemId, Item, Price, Quantity, Processed) VALUES (${user_uid}, ${orderId}, ${request_product_idx}, '${product_name}', ${product_price}, ${product_quantity}, 0);`);
+  }
+}
+
 function check_quantity(names, quantity) {
 
     const order_id_quantiy = new Map();
@@ -81,11 +138,11 @@ function check_quantity(names, quantity) {
   }
   
 function set_up_user_order_table(user_uid) {
-    const order_add1 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Roller Skate', '${user_uid}', 399.95, 0);`
-    const order_add2 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Helmet', '${user_uid}', 69.95, 0);`
-    const order_add3 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Pads', '${user_uid}', 74.95, 0);`
-    const order_add4 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Wheels', '${user_uid}', 32.00, 0);`
-    const order_add5 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Hat', '${user_uid}', 20.00, 0);`
+    const order_add1 = `INSERT INTO Item_order (Item, UserId, Price, quantity) VALUES ('Roller Skate', '${user_uid}', 399.95, 0);`
+    const order_add2 = `INSERT INTO Item_order (Item, UserId, Price, quantity) VALUES ('Helmet', '${user_uid}', 69.95, 0);`
+    const order_add3 = `INSERT INTO Item_order (Item, UserId, Price, quantity) VALUES ('Pads', '${user_uid}', 74.95, 0);`
+    const order_add4 = `INSERT INTO Item_order (Item, UserId, Price, quantity) VALUES ('Wheels', '${user_uid}', 32.00, 0);`
+    const order_add5 = `INSERT INTO Item_order (Item, UserId, Price, quantity) VALUES ('Hat', '${user_uid}', 20.00, 0);`
   
     const set_up3 = [order_add1, order_add2, order_add3, order_add4, order_add5];
   
@@ -95,9 +152,9 @@ function set_up_user_order_table(user_uid) {
   
 function check_uid(user_uid) {
     console.log(user_uid);
-    console.log(`select * from Item_order WHERE customerId = '${user_uid}'';`);
+    console.log(`select * from Item_order WHERE UserId = '${user_uid}'';`);
 
-    const result_json =  JSON.parse(JSON.stringify(db.query(`select * from Item_order WHERE customerId = '${user_uid}';`)));
+    const result_json =  JSON.parse(JSON.stringify(db.query(`select * from Item_order WHERE UserId = '${user_uid}';`)));
 
     console.log('result_json : ', result_json);
 
@@ -114,7 +171,7 @@ function check_uid(user_uid) {
   
 function check_user_order(user_uid) {
   
-    const result_json =  JSON.parse(JSON.stringify(db.query(`select * from Item_order WHERE customerId = '${user_uid}';`)));
+    const result_json =  JSON.parse(JSON.stringify(db.query(`select * from Item_order WHERE UserId = '${user_uid}';`)));
   
     const exist_user_order = new Map();
   
@@ -125,41 +182,8 @@ function check_user_order(user_uid) {
   
     return exist_user_order
   }
-  
-
-  
-// app.post("/depost_order_pre", function(req, res) {
-//   var names = req.body.names;
-//   var quantity = req.body.quantity;
-//   var user_uid = req.body.user_uid;
-
-//   const [flag, order_id_quantiy, n_id_quantiy, response] = utils.check_quantity(names, quantity);
-//   const uid_exist_flag = utils.check_uid(user_uid);
-
-//   if (flag == true) {
-
-//     if (uid_exist_flag == false){
-//       utils.set_up_user_order_table(user_uid);
-//     }
-
-//     exist_user_order = utils.check_user_order(user_uid);
-
-//     for (const [Id, value] of Object.entries(n_id_quantiy)) {
-
-//         var update_oder = order_id_quantiy[Id] + exist_user_order[Id];
-//         const result1 = db.query(`UPDATE Item_order SET quantity = ${update_oder} WHERE Id = ${Id} AND customerId = '${user_uid}';`);
-//         console.log('depost_order 1: ', result1);
-        
-//         const result2 = db.query(`UPDATE Item SET quantity = ${value} WHERE Id = ${Id};`);
-//         console.log('depost_order 2: ', result2);
-//     }
-//   }
-  
-//   return res.send(response)
-
-// });
 
 
-module.exports = { check_quantity, set_up_user_order_table, check_uid, check_user_order, check_quantity_nocare};
+module.exports = {insert_orders, get_next_orderId, check_products_quantity_in_stock, check_quantity, set_up_user_order_table, check_uid, check_user_order, check_quantity_nocare};
 
 
