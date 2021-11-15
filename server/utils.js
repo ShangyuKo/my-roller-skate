@@ -81,13 +81,29 @@ function check_quantity(names, quantity) {
   }
   
 function set_up_user_order_table(user_uid) {
-    const order_add1 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Roller Skate', '${user_uid}', 399.95, 0);`
-    const order_add2 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Helmet', '${user_uid}', 69.95, 0);`
-    const order_add3 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Pads', '${user_uid}', 74.95, 0);`
-    const order_add4 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Wheels', '${user_uid}', 32.00, 0);`
-    const order_add5 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Hat', '${user_uid}', 20.00, 0);`
+    const order_add1 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Roller Skate1', '${user_uid}', 399.95, 0);`
+    const order_add2 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Roller Skate2', '${user_uid}', 399.95, 0);`
+    const order_add3 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Roller Skate3', '${user_uid}', 299.95, 0);`
+    const order_add4 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Roller Skate4', '${user_uid}', 299.95, 0);`
+
+    const order_add5 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Helmet1', '${user_uid}', 69.95, 0);`
+    const order_add6 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Helmet2', '${user_uid}', 19.95, 0);`
+    const order_add7 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Helmet3', '${user_uid}', 19.95, 0);`
+    const order_add8 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Helmet4', '${user_uid}', 19.95, 0);`
+
+    const order_add9 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Pads1', '${user_uid}', 74.95, 0);`
+    const order_add10 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Pads2', '${user_uid}', 74.95, 0);`
+    const order_add11 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Pads3', '${user_uid}', 74.95, 0);`
+    const order_add12 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Pads4', '${user_uid}', 74.95, 0);`
+
+    const order_add13 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Wheels1', '${user_uid}', 32.00, 0);`
+    const order_add14 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Wheels2', '${user_uid}', 32.00, 0);`
+    const order_add15 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Wheels3', '${user_uid}', 32.00, 0);`
+    const order_add16 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Wheels4', '${user_uid}', 32.00, 0);`
+
+    //const order_add5 = `INSERT INTO Item_order (Item, customerId, Price, quantity) VALUES ('Hat', '${user_uid}', 20.00, 0);`
   
-    const set_up3 = [order_add1, order_add2, order_add3, order_add4, order_add5];
+    const set_up3 = [order_add1, order_add2, order_add3, order_add4, order_add5, order_add6, order_add7, order_add8, order_add9, order_add10, order_add11, order_add12, order_add13, order_add14, order_add15, order_add16];
   
     set_up3.forEach(element =>
         db.query(element));
