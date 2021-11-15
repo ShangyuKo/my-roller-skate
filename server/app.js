@@ -86,12 +86,26 @@ set_up.forEach(element => db.query(element));
 
 // INSERT default data
 const item_add1 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Roller Skate', 399.95, 10, 'https://media.dollskill.com/media/1qVrP7p2r7z7HDduWyE9QzFM179S12Lk-34.jpg')"
-const item_add2 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Helmet', 69.95, 10, 'https://cdn.shopify.com/s/files/1/0836/6919/products/green_bike_helmet_001_600x.jpg?v=1611711971')"
-const item_add3 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Pads', 74.95, 10, 'https://www.rei.com/media/8be42fa2-c3a3-4517-85c1-e13dea1213f5?size=784x588')"
-const item_add4 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Wheels', 32.00, 10, 'https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Impala-58mm-82a-Pastel-Lilac-Roller-Skate-Wheels-_341741-front-US.jpg')"
-const item_add5 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Hat', 20.00, 8, 'https://cdn.shopify.com/s/files/1/0066/8945/6243/products/Impala_skate_inline_skates_blades_rollerblades_blue_180x.jpg?v=1584306107')"
+const item_add2 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Roller Skate', 399.95, 10, 'https://images.urbndata.com/is/image/UrbanOutfitters/55143531_067_b?$xlarge$&fit=constrain&fmt=webp&qlt=80&wid=720')"
+const item_add3 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('3-Wheelsm', 30.00, 2, 'https://i5.walmartimages.com/asr/ebd6d548-ad6c-4d2c-acdd-e5c824908579.14390c0a369aa722af7f4c8c31edda6b.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF')"
+const item_add4 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Colorful Blades', 20.00, 8, 'https://cdn.shopify.com/s/files/1/0066/8945/6243/products/Impala_skate_inline_skates_blades_rollerblades_blue_180x.jpg?v=1584306107')"
+const item_add5 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Pads', 74.95, 10, 'https://www.rei.com/media/8be42fa2-c3a3-4517-85c1-e13dea1213f5?size=784x588')"
+const item_add6 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Pads', 74.95, 10, 'https://cdn10.bigcommerce.com/s-bac1n25m/product_images/attribute_rule_images/423295_std_1627047275.jpg')"
+const item_add7 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Pads', 74.95, 10, 'https://cdn.shopify.com/s/files/1/2423/6599/products/SpringMint_2021_4copy_900x.jpg?v=1617230926')"
+const item_add8 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Pads', 74.95, 10, 'https://cdn.shopify.com/s/files/1/0335/2762/7821/products/Wipeout-Pads_1-PinkTeal-Hero_1024x1024.jpg?v=1594050870')"
 
-const set_up2 = [item_add1, item_add2, item_add3, item_add4, item_add5];
+const item_add9 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Wheels', 32.00, 10, 'https://scene7.zumiez.com/is/image/zumiez/product_main_medium_2x/Impala-58mm-82a-Pastel-Lilac-Roller-Skate-Wheels-_341741-front-US.jpg')"
+const item_add10 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Wheels', 32.00, 10, 'https://i5.walmartimages.com/asr/deff5b90-7bc5-4166-8442-4ea64b5b3d2e.e584b7219861e595cef582a3bc2d7bfc.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF')"
+const item_add11 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Wheels', 32.00, 10, 'https://cdn10.bigcommerce.com/s-bac1n25m/products/19478/images/64803/WHEELS-STOPPERS_1200x1200__0000s_0029_INLINEWHEELPACK_SKYBLUE_2_1200x__03102.1627323392.462.464.jpg?c=2')"
+const item_add12 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Wheels', 32.00, 10, 'https://m.media-amazon.com/images/I/81Fdo24b77L._AC_SX679_.jpg')"
+
+const item_add13 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Helmet', 69.95, 10, 'https://cdn.shopify.com/s/files/1/0836/6919/products/green_bike_helmet_001_600x.jpg?v=1611711971')"
+const item_add14 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Helmet', 19.95, 10, 'https://cdn.shopify.com/s/files/1/2423/6599/products/4272_1_Maincopy_900x.jpg?v=1632848198')"
+const item_add15 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Helmet', 19.95, 10, 'https://cdn.shopify.com/s/files/1/0279/0277/1337/products/The-Heed-Black-Rubber_6f2a418f-5574-4c54-89e6-25985c770bc9_1024x1024.jpg?v=1589401252')"
+const item_add16 = "INSERT INTO Item (Item, Price, quantity, PicLink) VALUES ('Helmet', 19.95, 10, 'https://cdn.shopify.com/s/files/1/0330/6389/5085/products/1_2_dd218ee8-0201-4199-a2c8-7d63002fdc9b-sw_1200x.jpg?v=1624441370')"
+
+
+const set_up2 = [item_add1, item_add2, item_add3, item_add4,item_add5 , item_add6, item_add7, item_add8, item_add9, item_add10, item_add11, item_add12, item_add13, item_add14, item_add15, item_add16];
 
 set_up2.forEach(element =>
     db.query(element));

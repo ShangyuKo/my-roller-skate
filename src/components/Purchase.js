@@ -9,7 +9,7 @@ import { Button } from './Button';
 
 const Purchase = ({user_uid}) => {
     const [order, setOrder] = useState({
-        buyQuantity: [0,0,0,0,0,0]
+        buyQuantity: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
       });
 
 

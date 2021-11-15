@@ -12,11 +12,11 @@ const Confirm = ({user_uid}) => {
     console.log('user_uid: ', user_uid);
 
     const history = useHistory();
-    const [productsIdx, setProductsIdx] = useState([0,1,2,3,4])
+    const [productsIdx, setProductsIdx] = useState([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
     const [order, setOrder] = useState({
         item_name: {},
-        item_price: [0,0,0,0,0,0],
-        buyQuantity: [0,0,0,0,0,0],
+        item_price: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        buyQuantity: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         totalPrice: 0,
         paymentInfo: {
           creditCardNumber: '',
@@ -182,7 +182,7 @@ const Confirm = ({user_uid}) => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Checkout Order
+              Go Back
             </Button>
             {/* <Button className='btn' onClick={() => purchaseHandler()}>Checkout Order</Button> */}
         </div>
